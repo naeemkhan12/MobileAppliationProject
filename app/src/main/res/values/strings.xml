@@ -5,4 +5,13 @@
 
     <!-- was "Signing up..." -->
     <string name="fui_progress_dialog_signing_up">Creating your new account hang tight...</string>
+    <string name="signInButton">Sign In</string>
+    <string name="userName">user name</string>
+    <string name="Password">Password</string>
+    <string name="margin_top">10dp</string>
+    <string name="or">OR</string>
+    <string name="sign_up">SIGN UP</string>
+    <dimen name="margin_top">10dp</dimen>
+    <dimen name="font_regular">34sp</dimen>
+    <dimen name="font_small">20sp</dimen>
 </resources>
