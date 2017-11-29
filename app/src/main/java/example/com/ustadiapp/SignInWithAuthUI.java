@@ -1,5 +1,6 @@
 package example.com.ustadiapp;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import java.util.List;
 public class SignInWithAuthUI extends Fragment{
     private static final int RC_SIGN_IN = 123;
     private static final String LOG="TESTLOG";
+    private FirebaseAuth auth;
 // ...
 
     // Choose authentication providers
@@ -37,15 +39,12 @@ public class SignInWithAuthUI extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        FirebaseAuth auth = FirebaseAuth.getInstance();
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
-                        .setTheme(R.style.GreenTheme)
                         .build(),
                 RC_SIGN_IN);
-
     }
 
     @Nullable
