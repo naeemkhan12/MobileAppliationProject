@@ -5,4 +5,5 @@ package example.com.ustadiapp;
  */
 
 public interface SignInInterface {
+
 }

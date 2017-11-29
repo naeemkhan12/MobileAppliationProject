@@ -21,16 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="@string/userName"
+        android:textSize="@dimen/material_text_body1"
         tools:ignore="TextFields" />
 
     <EditText
         android:id="@+id/editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Password"
         android:ems="10"
         android:layout_marginTop="10dp"
+        android:textSize="@dimen/material_text_body1"
         android:inputType="textPassword" />
 
     <Button
@@ -38,6 +38,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textSize="@dimen/material_text_button"
+        android:background="@color/colorPrimary"
         android:text="@string/signInButton" />
 
     <TextView
@@ -45,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_top"
-        android:textSize="@dimen/font_regular"
+        android:textSize="@dimen/material_text_body2"
         android:gravity="center"
         android:text="@string/or" />
 
@@ -53,5 +55,7 @@
         android:id="@+id/sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:textSize="@dimen/material_text_button"
         android:text="@string/sign_up" />
 </LinearLayout>
