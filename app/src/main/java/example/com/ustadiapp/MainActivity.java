@@ -23,7 +23,6 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG="TESTLOG";
     private static final int RC_SIGN_IN = 123;
 
-
     private FirebaseAuth mAuth;
 
 // ...
@@ -34,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
+
         if(mAuth.getCurrentUser()==null){
             SignIn signIn = new SignIn();
             FragmentManager fragmentManager = getSupportFragmentManager();
