@@ -33,15 +33,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
-
         if(mAuth.getCurrentUser()==null){
-            SignIn signIn = new SignIn();
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.main_frame,signIn);
-            fragmentTransaction.commit();
+            Intent intent = new Intent(this,UserAccount.class);
+            startActivity(intent);
         }else {
             Log.i(LOG,"User has Signed In");
+            Intent intent = new Intent(this,UserAccount.class);
+            startActivity(intent);
 
         }
 

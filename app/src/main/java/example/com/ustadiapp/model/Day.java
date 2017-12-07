@@ -6,13 +6,13 @@ package example.com.ustadiapp.model;
 
 public class Day {
     private String venu;
-    private String slot;
+    private int slotNumber;
     private String subject;
     private String time;
 
-    public Day(String venu, String slot, String subject, String time) {
+    public Day(String venu, int slotNumber, String subject, String time) {
         this.venu = venu;
-        this.slot = slot;
+        this.slotNumber = slotNumber;
         this.subject = subject;
         this.time = time;
     }
@@ -28,12 +28,12 @@ public class Day {
         this.venu = venu;
     }
 
-    public String getSlot() {
-        return slot;
+    public int getSlotNumber() {
+        return slotNumber;
     }
 
-    public void setSlot(String slot) {
-        this.slot = slot;
+    public void setSlotNumber(int slotNumber) {
+        this.slotNumber = slotNumber;
     }
 
     public String getSubject() {
