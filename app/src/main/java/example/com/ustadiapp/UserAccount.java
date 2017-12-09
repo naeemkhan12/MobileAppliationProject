@@ -23,7 +23,6 @@ public class UserAccount extends AppCompatActivity {
     // Choose authentication providers
     private List<AuthUI.IdpConfig> providers = Arrays.asList(
             new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-            new AuthUI.IdpConfig.Builder(AuthUI.GOOGLE_PROVIDER).build(),
             new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +36,7 @@ public class UserAccount extends AppCompatActivity {
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
                                 .setAvailableProviders(providers)
+                                .setTheme(R.style.signup_theme)
                                 .build(),
                         RC_SIGN_IN);
 

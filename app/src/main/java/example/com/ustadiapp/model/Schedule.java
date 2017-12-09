@@ -43,4 +43,9 @@ public class Schedule {
     public void setSlots(int slots) {
         this.slots = slots;
     }
+
+    @Override
+    public String toString(){
+        return "Finally ....DAz DAz DAz";
+    }
 }

@@ -9,12 +9,22 @@ public class Day {
     private int slotNumber;
     private String subject;
     private String time;
+    private boolean isAvailable;
 
-    public Day(String venu, int slotNumber, String subject, String time) {
+    public Day(String venu, int slotNumber, String subject, String time, boolean isAvailable) {
         this.venu = venu;
         this.slotNumber = slotNumber;
         this.subject = subject;
         this.time = time;
+        this.isAvailable=isAvailable;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean available) {
+        isAvailable = available;
     }
 
     public Day() {
