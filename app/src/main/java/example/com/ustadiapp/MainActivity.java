@@ -6,6 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.facebook.FacebookSdk;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import example.com.ustadiapp.model.CardModel;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Schedule;
 
@@ -32,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String LOG="TESTLOG";
     private static final int RC_SIGN_IN = 123;
     private static final String TAG = "TESTLOG";
+    private RecyclerView recyclerView;
 
     private FirebaseAuth mAuth;
 
@@ -43,18 +48,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
-        if(mAuth.getCurrentUser()==null){
-            Intent intent = new Intent(this,UserAccount.class);
-            startActivity(intent);
-        }else {
-            Log.i(LOG,"User has Signed In");
-            Intent intent = new Intent(this,UserAccount.class);
-            startActivity(intent);
+//        if(mAuth.getCurrentUser()==null){
+//            Intent intent = new Intent(this,UserAccount.class);
+//            startActivity(intent);
+//        }else {
+//            Log.i(LOG,"User has Signed In");
+//            Intent intent = new Intent(this,UserAccount.class);
+//            startActivity(intent);
+//
+//        }
+        ArrayList<CardModel> models= new ArrayList<>();
+        models.add(new CardModel("3:00 4:00","LH5","SD1"));
+        models.add(new CardModel("3:00 4:00","LH3","SD2"));
+        models.add(new CardModel("3:00 4:00","LH1","SV"));
+        models.add(new CardModel("3:00 4:00","LH1","SV"));
+        models.add(new CardModel("3:00 4:00","LH1","SV"));
+        models.add(new CardModel("3:00 4:00","LH1","SV"));
+        models.add(new CardModel("3:00 4:00","LH1","PHYSICS&CHEM"));
+        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(new CustomGridAdapter(this,models));
+        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 5, GridLayoutManager.VERTICAL, false));
 
-        }
-
-
-        // Write a message to the database
+                // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("schedule");
         if (mAuth.getCurrentUser()!=null){
@@ -66,10 +81,10 @@ public class MainActivity extends AppCompatActivity {
         list.add(new Day("LH1",2,"SD1","12:35",true));
         list.add(new Day("LH1",3,"SD2","12:35",true));
         list.add(new Day("LH3",5,"NNFS","12:35",true));
-        list.add(new Day("LH3",4,"SV","13:00",true));
+        list.add(new Day("LH3",4,"PHYSICS","13:00",true));
         Schedule schedule = new Schedule("12-10-2017",list,5);
 
-        myRef.setValue(schedule);
+//        myRef.setValue(schedule);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

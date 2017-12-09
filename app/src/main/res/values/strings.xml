@@ -29,5 +29,9 @@
     <dimen name="material_text_display1">34sp</dimen>
     <dimen name="material_text_display2">45sp</dimen>
     <dimen name="material_text_display3">56sp</dimen>
-    <dimen name="material_text_display4">112sp</dimen>
+    <dimen name="material_text_padding_small">1dp</dimen>
+    <dimen name="material_margin_regular">10dp</dimen>
+    <dimen name="material_margin_small">5dp</dimen>
+    <dimen name="material_padding_regular">5dp</dimen>
+
 </resources>
