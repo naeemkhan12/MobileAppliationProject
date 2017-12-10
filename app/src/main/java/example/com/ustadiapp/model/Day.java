@@ -1,64 +1,36 @@
 package example.com.ustadiapp.model;
 
+import java.util.ArrayList;
+
 /**
- * Created by naeem on 12/7/17.
+ * Created by naeem on 12/11/17.
  */
 
 public class Day {
-    private String venu;
-    private int slotNumber;
-    private String subject;
-    private String time;
-    private boolean isAvailable;
+    private ArrayList<Duty> duties;
+    private int id;
 
-    public Day(String venu, int slotNumber, String subject, String time, boolean isAvailable) {
-        this.venu = venu;
-        this.slotNumber = slotNumber;
-        this.subject = subject;
-        this.time = time;
-        this.isAvailable=isAvailable;
+    public Day(ArrayList<Duty> duties, int id) {
+        this.duties = duties;
+        this.id=id;
+    }
+    public Day(){
+
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public int getId() {
+        return id;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public Day() {
+    public ArrayList<Duty> getDuties() {
+        return duties;
     }
 
-    public String getVenu() {
-        return venu;
-    }
-
-    public void setVenu(String venu) {
-        this.venu = venu;
-    }
-
-    public int getSlotNumber() {
-        return slotNumber;
-    }
-
-    public void setSlotNumber(int slotNumber) {
-        this.slotNumber = slotNumber;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
+    public void setDuties(ArrayList<Duty> duties) {
+        this.duties = duties;
     }
 }
