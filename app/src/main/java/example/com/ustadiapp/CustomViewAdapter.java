@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.zip.Inflater;
 
 import example.com.ustadiapp.model.CardModel;
 
@@ -16,14 +15,14 @@ import example.com.ustadiapp.model.CardModel;
  * Created by naeem on 12/9/17.
  */
 
-public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridAdapter.CustomViewHolder> {
+public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.CustomViewHolder> {
 
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<CardModel> list;
 
-    public CustomGridAdapter(Context context, ArrayList<CardModel> list){
+    public CustomViewAdapter(Context context, ArrayList<CardModel> list){
         this.context=context;
         this.list=list;
         this.inflater= LayoutInflater.from(context);
@@ -40,6 +39,8 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridAdapter.Cu
         holder.time.setText(list.get(position).getTime());
         holder.venu.setText(list.get(position).getVenu());
         holder.subject.setText(list.get(position).getSubject());
+        holder.day.setText(list.get(position).getDay());
+        holder.slot.setText(list.get(position).getSlot()+"");
     }
 
     @Override
@@ -53,11 +54,15 @@ public class CustomGridAdapter extends RecyclerView.Adapter<CustomGridAdapter.Cu
         private TextView time;
         private TextView venu;
         private TextView subject;
+        private TextView day;
+        private TextView slot;
         public CustomViewHolder(View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
             venu = (TextView) itemView.findViewById(R.id.venu);
-            subject = (TextView) itemView.findViewById(R.id.subject);
+            subject = (TextView) itemView.findViewById(R.id.subj);
+            day = (TextView) itemView.findViewById(R.id.day);
+            slot = (TextView) itemView.findViewById(R.id.slot);
         }
 
 

@@ -1,21 +1,13 @@
 package example.com.ustadiapp;
 
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.firebase.ui.auth.AuthUI;
-import com.firebase.ui.auth.ErrorCodes;
-import com.firebase.ui.auth.IdpResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,8 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import example.com.ustadiapp.model.CardModel;
 import example.com.ustadiapp.model.Day;
@@ -58,16 +48,16 @@ public class MainActivity extends AppCompatActivity {
 //
 //        }
         ArrayList<CardModel> models= new ArrayList<>();
-        models.add(new CardModel("3:00 4:00","LH5","SD1"));
-        models.add(new CardModel("3:00 4:00","LH3","SD2"));
-        models.add(new CardModel("3:00 4:00","LH1","SV"));
-        models.add(new CardModel("3:00 4:00","LH1","SV"));
-        models.add(new CardModel("3:00 4:00","LH1","SV"));
-        models.add(new CardModel("3:00 4:00","LH1","SV"));
-        models.add(new CardModel("3:00 4:00","LH1","PHYSICS"));
+        models.add(new CardModel("3:00 4:00","LH5","SD1","WED",1));
+        models.add(new CardModel("3:00 4:00","LH3","SD2","WED",1));
+        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
+        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
+        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
+        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
+        models.add(new CardModel("3:00 4:00","LH1","PHYSICS","WED",1));
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(new CustomGridAdapter(this,models));
-        recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 5, GridLayoutManager.VERTICAL, false));
+        recyclerView.setAdapter(new CustomViewAdapter(this,models));
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
                 // Write a message to the database
         FirebaseDatabase database = FirebaseDatabase.getInstance();

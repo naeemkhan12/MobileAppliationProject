@@ -8,18 +8,38 @@ public class CardModel {
     private String time;
     private String venu;
     private String subject;
+    private String day;
+    private int slot;
     public CardModel(){
 
     }
 
-    public CardModel(String time, String venu, String subject) {
+    public CardModel(String time, String venu, String subject,String day,int slot) {
         this.time = time;
         this.venu = venu;
         this.subject = subject;
+        this.day = day;
+        this.slot=slot;
     }
 
     public String getTime() {
         return time;
+    }
+
+    public String getDay() {
+        return day;
+    }
+
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public int getSlot() {
+        return slot;
+    }
+
+    public void setSlot(int slot) {
+        this.slot = slot;
     }
 
     public void setTime(String time) {

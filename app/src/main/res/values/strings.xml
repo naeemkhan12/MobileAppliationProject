@@ -16,16 +16,14 @@
     <string name="text_username">Username</string>
 
     <!--main activity main layout-->
-    <string name="text_mon">Mon</string>
-    <string name="text_tue">Tue</string>
-    <string name="text_wed">Wed</string>
-    <string name="text_thu">Thu</string>
-    <string name="text_fri">Fri</string>
-    <string name="text_slot1">1</string>
-    <string name="text_slot2">2</string>
-    <string name="text_slot3">3</string>
-    <string name="text_slot4">4</string>
-    <string name="text_slot5">5</string>
+    <string name="text_day">Sample Day</string>
+    <string name="text_slot">0</string>
+    <string name="text_time">0:00 0:00</string>
+    <string name="text_subject">Subject</string>
+    <string name="text_venu">LH0</string>
+
+
+
 
 
     <dimen name="margin_top">10dp</dimen>
@@ -33,7 +31,9 @@
     <dimen name="font_small">20sp</dimen>
     <dimen name="button_padding">10dp</dimen>
 
-
+<!--alert dialog-->
+    <string name="confirm">OK</string>
+    <string name="cancel">Cancel</string>
 
     <!--material design dimens-->
     <dimen name="material_text_button">14sp</dimen>
@@ -50,6 +50,6 @@
     <dimen name="material_text_padding_small">1dp</dimen>
     <dimen name="material_margin_regular">10dp</dimen>
     <dimen name="material_margin_small">5dp</dimen>
-    <dimen name="material_padding_regular">2dp</dimen>
+    <dimen name="material_padding_regular">5dp</dimen>
 
 </resources>
