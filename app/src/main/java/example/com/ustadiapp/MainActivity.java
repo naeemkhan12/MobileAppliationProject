@@ -137,4 +137,13 @@ public class MainActivity extends AppCompatActivity {
 //    }
  }
 
+ /* Alert Dialogue for cards */
 
+//    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
+//// ...Irrelevant code for customizing the buttons and title
+//dialogBuilder.setView(inflater.inflate(R.layout.alert_label_editor, null));
+//        AlertDialog alertDialog = dialogBuilder.create();
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        EditText editText = (EditText) alertDialog.findViewById(R.id.label_field);
+//        editText.setText("test label");
+//        alertDialog.show();

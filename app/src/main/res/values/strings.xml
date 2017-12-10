@@ -11,10 +11,28 @@
     <string name="margin_top">10dp</string>
     <string name="or">OR</string>
     <string name="sign_up">SIGN UP</string>
+    <string name="radio_available">Available for duty</string>
+    <string name="radio_swap">Swap with Others</string>
+    <string name="text_username">Username</string>
+
+    <!--main activity main layout-->
+    <string name="text_mon">Mon</string>
+    <string name="text_tue">Tue</string>
+    <string name="text_wed">Wed</string>
+    <string name="text_thu">Thu</string>
+    <string name="text_fri">Fri</string>
+    <string name="text_slot1">1</string>
+    <string name="text_slot2">2</string>
+    <string name="text_slot3">3</string>
+    <string name="text_slot4">4</string>
+    <string name="text_slot5">5</string>
+
+
     <dimen name="margin_top">10dp</dimen>
     <dimen name="font_regular">34sp</dimen>
     <dimen name="font_small">20sp</dimen>
     <dimen name="button_padding">10dp</dimen>
+
 
 
     <!--material design dimens-->

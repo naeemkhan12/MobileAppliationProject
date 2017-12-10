@@ -7,7 +7,64 @@
     tools:context="example.com.ustadiapp.MainActivity">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+        android:layout_width="271dp"
+        android:layout_height="399dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"></android.support.v7.widget.RecyclerView>
+
+    <TextView
+        android:id="@+id/tue"
+        android:textSize="@dimen/material_text_subhead"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_tue"
+        app:layout_constraintRight_toLeftOf="@+id/wed"
+        app:layout_constraintLeft_toRightOf="@+id/mon"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/thu"
+        android:textSize="@dimen/material_text_subhead"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_thu"
+        app:layout_constraintRight_toLeftOf="@+id/fri"
+        app:layout_constraintLeft_toRightOf="@+id/wed"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/mon"
+        android:textSize="@dimen/material_text_subhead"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_mon"
+        app:layout_constraintRight_toLeftOf="@+id/tue"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/fri"
+        android:textSize="@dimen/material_text_subhead"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_fri"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/thu"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/wed"
+        android:textSize="@dimen/material_text_subhead"
+        android:layout_width="67dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_wed"
+        app:layout_constraintRight_toLeftOf="@+id/thu"
+        app:layout_constraintLeft_toRightOf="@+id/tue"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="8dp" />
 
 </android.support.constraint.ConstraintLayout>
