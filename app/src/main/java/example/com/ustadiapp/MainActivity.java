@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         models.add(new CardModel("3:00 4:00","LH1","SV"));
         models.add(new CardModel("3:00 4:00","LH1","SV"));
         models.add(new CardModel("3:00 4:00","LH1","SV"));
-        models.add(new CardModel("3:00 4:00","LH1","PHYSICS&CHEM"));
+        models.add(new CardModel("3:00 4:00","LH1","PHYSICS"));
         recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
         recyclerView.setAdapter(new CustomGridAdapter(this,models));
         recyclerView.setLayoutManager(new GridLayoutManager(MainActivity.this, 5, GridLayoutManager.VERTICAL, false));

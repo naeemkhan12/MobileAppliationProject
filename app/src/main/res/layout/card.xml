@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/material_padding_regular"
-            android:textSize="@dimen/material_text_subhead"
+            android:textSize="@dimen/material_text_body2"
             android:layout_gravity="center"
             android:gravity="center"
 
@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/material_padding_regular"
-            android:textSize="@dimen/material_text_subhead"
+            android:textSize="@dimen/material_text_body2"
             android:layout_gravity="center"
             android:gravity="center"
             />
