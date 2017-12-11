@@ -18,12 +18,22 @@ public  class FirebaseCRUD {
     public FirebaseCRUD(FirebaseDatabase databaseInstance){
         this.databaseInstance=databaseInstance;
     }
-    public void postSchedule(String userId, Schedule schedule){
+    public void postUserSchedule(String userId, Schedule schedule){
         DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child(userId);
        databaseReference.setValue(schedule);
     }
-    public DatabaseReference getRefrence(String userId){
+    public DatabaseReference getUserRefrence(String userId){
         return databaseInstance.getReference("schedule/").child(userId);
+    }
+    public DatabaseReference getRootRefrence(){
+        return databaseInstance.getReference().child("schedule");
+    }
+    public DatabaseReference getSampleRefrence(){
+        return databaseInstance.getReference("schedule/").child("sample");
+    }
+    public void postSchedule(Schedule schedule){
+        DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child("sample");
+        databaseReference.setValue(schedule);
     }
 
 }

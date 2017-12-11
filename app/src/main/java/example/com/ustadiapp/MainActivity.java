@@ -77,10 +77,15 @@ public class MainActivity extends AppCompatActivity {
         dayArrayList.add(new Day(dutyArrayList,5));
 
         Schedule schedule = new Schedule("12-01-2017", dayArrayList,5);
-        firebaseCRUD.postSchedule(userId,schedule);
-        firebaseCRUD.getRefrence(userId).addValueEventListener(new ValueEventListener() {
+        firebaseCRUD.postUserSchedule(userId,schedule);
+        firebaseCRUD.getUserRefrence(userId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot!=null){
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                        Log.i(LOG,"key: "+snapshot.getKey());
+                    }
+                }
 
                 Log.i(LOG,"DATA UPDATED");
             }
