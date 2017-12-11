@@ -34,6 +34,10 @@
 <!--alert dialog-->
     <string name="confirm">OK</string>
     <string name="cancel">Cancel</string>
+    <!--availabel card view-->
+    <string name="check_box_available">Available</string>
+    <string name="text_heading_time">0:00 0:00</string>
+    <string name="text_subheading_day">Balck Day</string>
 
     <!--material design dimens-->
     <dimen name="material_text_button">14sp</dimen>
