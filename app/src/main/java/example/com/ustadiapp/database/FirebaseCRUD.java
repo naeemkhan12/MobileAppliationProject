@@ -31,7 +31,7 @@ public  class FirebaseCRUD {
     public DatabaseReference getSampleRefrence(){
         return databaseInstance.getReference("schedule/").child("sample");
     }
-    public void postSchedule(Schedule schedule){
+    public void postSampleSchedule(Schedule schedule){
         DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child("sample");
         databaseReference.setValue(schedule);
     }
