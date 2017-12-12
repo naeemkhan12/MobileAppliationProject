@@ -6,19 +6,40 @@ package example.com.ustadiapp.model;
 
 public class Duty {
     private String venu;
-    private int slotNumber;
+    private Slot slot;
     private String subject;
-    private String startTime;
-    private String endTime;
     private boolean isAvailable;
+    private User user;
 
-    public Duty(String venu, int slotNumber, String subject, String startTime, String endTime, boolean isAvailable) {
+    public Duty(String venu,  Slot slot,String subject, boolean isAvailable) {
         this.venu = venu;
-        this.slotNumber = slotNumber;
+        this.slot = slot;
         this.subject = subject;
-        this.startTime=startTime;
-        this.endTime=endTime;
+
         this.isAvailable=isAvailable;
+    }
+    public Duty(String venu, Slot slot,String subject, boolean isAvailable,User user) {
+        this.venu = venu;
+        this.slot = slot;
+        this.subject = subject;
+        this.user=user;
+        this.isAvailable=isAvailable;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isAvailable() {
@@ -31,37 +52,12 @@ public class Duty {
 
     public Duty() {
     }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
-    }
-
-    public String getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
     public String getVenu() {
         return venu;
     }
 
     public void setVenu(String venu) {
         this.venu = venu;
-    }
-
-    public int getSlotNumber() {
-        return slotNumber;
-    }
-
-    public void setSlotNumber(int slotNumber) {
-        this.slotNumber = slotNumber;
     }
 
     public String getSubject() {

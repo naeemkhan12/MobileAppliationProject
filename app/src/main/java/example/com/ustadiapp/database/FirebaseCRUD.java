@@ -35,5 +35,13 @@ public  class FirebaseCRUD {
         DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child("sample");
         databaseReference.setValue(schedule);
     }
+    public void updateDutyTable(Schedule schedule){
+
+        DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child("dutyTable");
+        databaseReference.setValue(schedule);
+    }
+    public DatabaseReference dutyTableRefrence(){
+        return databaseInstance.getReference("schedule/").child("dutyTable");
+    }
 
 }

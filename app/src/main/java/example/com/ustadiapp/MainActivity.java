@@ -31,6 +31,7 @@ import example.com.ustadiapp.model.CardModel;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.Schedule;
+import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -71,6 +72,23 @@ public class MainActivity extends AppCompatActivity {
             userId=mAuth.getCurrentUser().getUid();
 
         }
+        FirebaseCRUD crud = new FirebaseCRUD(database);
+        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Schedule schedule = dataSnapshot.getValue(Schedule.class);
+                Log.d(LOG,"Dataset Changed"+ schedule.getDate()+schedule.getList().size());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+//        UpdateUI task = new UpdateUI(this,database,userId);
+//        task.execute();
+
 
 //        FirebaseCRUD firebaseCRUD = new FirebaseCRUD(database);
 //        ArrayList<Duty> dutyArrayList = new ArrayList<>();
@@ -105,9 +123,7 @@ public class MainActivity extends AppCompatActivity {
 //
 //            }
 //        });
-        UpdateUI task = new UpdateUI(this,database,userId);
-        task.execute();
-
+//
 //
 //
 //
@@ -267,10 +283,10 @@ public class MainActivity extends AppCompatActivity {
                     day.getId();
                     int slot;
                     for (Duty duty : day.getDuties()) {
-                        time = duty.getStartTime() + " " + duty.getEndTime();
+                        time = duty.getSlot().getStartTime()+" "+duty.getSlot().getEndTime();
                         venu = duty.getVenu();
                         subject = duty.getSubject();
-                        slot = duty.getSlotNumber();
+                        slot = duty.getSlot().getId();
                         dataList.add(new CardModel(time, venu, subject, dayname, slot));
                     }
 

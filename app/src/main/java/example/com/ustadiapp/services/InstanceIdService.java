@@ -16,8 +16,10 @@ public class InstanceIdService extends FirebaseInstanceIdService {
     public void onTokenRefresh() {
         super.onTokenRefresh();
         token = FirebaseInstanceId.getInstance().getToken();
+
         Log.d(LOG,token);
 
 //        TODO: save token with userid on server
+//        http://www.mydomain.com/index.php?argument1=arg1&argument2=arg2
     }
 }
