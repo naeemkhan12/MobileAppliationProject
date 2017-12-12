@@ -44,4 +44,12 @@ public  class FirebaseCRUD {
         return databaseInstance.getReference("schedule/").child("dutyTable");
     }
 
+//    httpPost = new HttpPost("http://xxx.xxx.xxx.xx/user/login.json");
+//    nameValuePairs = new ArrayList<NameValuePair>(2);
+//nameValuePairs.add(new BasicNameValuePair("email".trim(), emailID));
+//nameValuePairs.add(new BasicNameValuePair("password".trim(), passWord));
+//    httpPost = new HttpPost(url);
+//httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//    String response = new DefaultHttpClient().execute(httpPost, new BasicResponseHandler());
+
 }

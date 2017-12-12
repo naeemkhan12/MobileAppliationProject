@@ -9,20 +9,20 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import example.com.ustadiapp.model.CardModel;
+import example.com.ustadiapp.model.MyCardModel;
 
 /**
  * Created by naeem on 12/9/17.
  */
 
-public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.CustomViewHolder> {
+public class CustomMyViewAdapter extends RecyclerView.Adapter<CustomMyViewAdapter.CustomViewHolder> {
 
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<CardModel> list;
+    private ArrayList<MyCardModel> list;
 
-    public CustomViewAdapter(Context context, ArrayList<CardModel> list){
+    public CustomMyViewAdapter(Context context, ArrayList<MyCardModel> list){
         this.context=context;
         this.list=list;
         this.inflater= LayoutInflater.from(context);
@@ -30,7 +30,7 @@ public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.Cu
     }
     @Override
     public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return  new CustomViewHolder(inflater.inflate(R.layout.card,parent,false));
+        return  new CustomViewHolder(inflater.inflate(R.layout.my_card,parent,false));
 
     }
 
@@ -59,7 +59,7 @@ public class CustomViewAdapter extends RecyclerView.Adapter<CustomViewAdapter.Cu
         public CustomViewHolder(View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
-            venu = (TextView) itemView.findViewById(R.id.venu);
+            venu = (TextView) itemView.findViewById(R.id.name);
             subject = (TextView) itemView.findViewById(R.id.subj);
             day = (TextView) itemView.findViewById(R.id.day);
             slot = (TextView) itemView.findViewById(R.id.slot);

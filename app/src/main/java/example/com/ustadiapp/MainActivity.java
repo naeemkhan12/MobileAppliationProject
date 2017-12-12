@@ -13,7 +13,6 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import example.com.ustadiapp.database.FirebaseCRUD;
-import example.com.ustadiapp.model.CardModel;
+import example.com.ustadiapp.model.MyCardModel;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.Schedule;
@@ -86,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-//        UpdateUI task = new UpdateUI(this,database,userId);
-//        task.execute();
+        UpdateUI task = new UpdateUI(this,database,userId);
+        task.execute();
 
 
 //        FirebaseCRUD firebaseCRUD = new FirebaseCRUD(database);
@@ -139,17 +138,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 //
-//        ArrayList<CardModel> models= new ArrayList<>();
-//        models.add(new CardModel("3:00 4:00","LH5","SD1","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH3","SD2","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new CardModel("3:00 4:00","LH1","PHYSICS","WED",1));
+//        ArrayList<MyCardModel> models= new ArrayList<>();
+//        models.add(new MyCardModel("3:00 4:00","LH5","SD1","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH3","SD2","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
+//        models.add(new MyCardModel("3:00 4:00","LH1","PHYSICS","WED",1));
 //
 //        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-//        recyclerView.setAdapter(new CustomViewAdapter(this,models));
+//        recyclerView.setAdapter(new CustomMyViewAdapter(this,models));
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 //                // Write a message to the database
@@ -222,8 +221,8 @@ public class MainActivity extends AppCompatActivity {
         private FirebaseDatabase database;
         private String userId;
         private Schedule schedule;
-        private ArrayList<CardModel> dataList;
-        private  static final String DATABASE_URL="https://ustadiapp.firebaseio.com/schedule/";
+        private ArrayList<MyCardModel> dataList;
+        private  static final String DATABASE_URL="https://ustadiapp.firebaseio.com/schedule/dutyTable.json";
 
 
         public UpdateUI(Context context,FirebaseDatabase database, String userId){
@@ -259,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                String jsonDatabase = downloadJson(DATABASE_URL+userId+".json");
+                String jsonDatabase = downloadJson(DATABASE_URL);
                 schedule=parseJsontoJava(jsonDatabase);
                 Log.d(LOG,"data downloaded");
             } catch (IOException e) {
@@ -287,13 +286,13 @@ public class MainActivity extends AppCompatActivity {
                         venu = duty.getVenu();
                         subject = duty.getSubject();
                         slot = duty.getSlot().getId();
-                        dataList.add(new CardModel(time, venu, subject, dayname, slot));
+                        dataList.add(new MyCardModel(time, venu, subject, dayname, slot));
                     }
 
                 }
             }
             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            recyclerView.setAdapter(new CustomViewAdapter(context,dataList));
+            recyclerView.setAdapter(new CustomMyViewAdapter(context,dataList));
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 

@@ -21,5 +21,29 @@ public class InstanceIdService extends FirebaseInstanceIdService {
 
 //        TODO: save token with userid on server
 //        http://www.mydomain.com/index.php?argument1=arg1&argument2=arg2
+
+
+
+//        https://stackoverflow.com/questions/24233632/how-to-add-parameters-to-api-http-post-using-okhttp-library-in-android
+
+
+        /*
+        *  private final OkHttpClient client = new OkHttpClient();
+
+      public void run() throws Exception {
+        RequestBody formBody = new FormEncodingBuilder()
+            .add("email", "Jurassic@Park.com")
+            .add("tel", "90301171XX")
+            .build();
+        Request request = new Request.Builder()
+            .url("https://en.wikipedia.org/w/index.php")
+            .post(formBody)
+            .build();
+
+        Response response = client.newCall(request).execute();
+        if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+        System.out.println(response.body().string());
+      }*/
     }
 }

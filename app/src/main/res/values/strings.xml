@@ -21,6 +21,8 @@
     <string name="text_time">0:00 0:00</string>
     <string name="text_subject">Subject</string>
     <string name="text_venu">LH0</string>
+    <string name="text_name">Name</string>
+
 
 
 
@@ -34,7 +36,7 @@
 <!--alert dialog-->
     <string name="confirm">OK</string>
     <string name="cancel">Cancel</string>
-    <!--availabel card view-->
+    <!--availabel my_card view-->
     <string name="check_box_available">Available</string>
     <string name="text_heading_time">0:00 0:00</string>
     <string name="text_subheading_day">Balck Day</string>

@@ -4,17 +4,17 @@ package example.com.ustadiapp.model;
  * Created by naeem on 12/9/17.
  */
 
-public class CardModel {
+public class MyCardModel {
     private String time;
     private String venu;
     private String subject;
     private String day;
     private int slot;
-    public CardModel(){
+    public MyCardModel(){
 
     }
 
-    public CardModel(String time, String venu, String subject,String day,int slot) {
+    public MyCardModel(String time, String venu, String subject, String day, int slot) {
         this.time = time;
         this.venu = venu;
         this.subject = subject;
