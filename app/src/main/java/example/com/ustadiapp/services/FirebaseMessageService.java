@@ -13,6 +13,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import example.com.ustadiapp.MainActivity;
+import example.com.ustadiapp.MarkAvailableActivity;
 import example.com.ustadiapp.R;
 
 /**
@@ -40,7 +41,7 @@ public class FirebaseMessageService  extends FirebaseMessagingService{
 
     private void sendNotification(RemoteMessage remoteMessage) {
         RemoteMessage.Notification notification = remoteMessage.getNotification();
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, MarkAvailableActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

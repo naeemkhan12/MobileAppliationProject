@@ -26,9 +26,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import example.com.ustadiapp.database.FirebaseCRUD;
-import example.com.ustadiapp.model.MyCardModel;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
+import example.com.ustadiapp.model.GeneralCardModel;
 import example.com.ustadiapp.model.Schedule;
 import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
@@ -221,7 +221,7 @@ public class MainActivity extends AppCompatActivity {
         private FirebaseDatabase database;
         private String userId;
         private Schedule schedule;
-        private ArrayList<MyCardModel> dataList;
+        private ArrayList<GeneralCardModel> dataList;
         private  static final String DATABASE_URL="https://ustadiapp.firebaseio.com/schedule/dutyTable.json";
 
 
@@ -281,12 +281,18 @@ public class MainActivity extends AppCompatActivity {
                     String dayname = DAYS[day.getId()];
                     day.getId();
                     int slot;
+                    String id;
+                    String username;
+                    boolean isAvailable;
                     for (Duty duty : day.getDuties()) {
                         time = duty.getSlot().getStartTime()+" "+duty.getSlot().getEndTime();
                         venu = duty.getVenu();
                         subject = duty.getSubject();
                         slot = duty.getSlot().getId();
-                        dataList.add(new MyCardModel(time, venu, subject, dayname, slot));
+                        id=duty.getUser().getUserId();
+                        username=duty.getUser().getUserName();
+                        isAvailable=duty.isAvailable();
+                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,username));
                     }
 
                 }

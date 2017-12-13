@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import example.com.ustadiapp.model.MyCardModel;
+import example.com.ustadiapp.model.GeneralCardModel;
 
 /**
  * Created by naeem on 12/9/17.
@@ -20,9 +20,9 @@ public class CustomMyViewAdapter extends RecyclerView.Adapter<CustomMyViewAdapte
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<MyCardModel> list;
+    private ArrayList<GeneralCardModel> list;
 
-    public CustomMyViewAdapter(Context context, ArrayList<MyCardModel> list){
+    public CustomMyViewAdapter(Context context, ArrayList<GeneralCardModel> list){
         this.context=context;
         this.list=list;
         this.inflater= LayoutInflater.from(context);
