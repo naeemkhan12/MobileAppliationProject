@@ -14,9 +14,9 @@ import example.com.ustadiapp.model.Schedule;
  */
 
 public  class FirebaseCRUD {
-    private FirebaseDatabase databaseInstance;
-    public FirebaseCRUD(FirebaseDatabase databaseInstance){
-        this.databaseInstance=databaseInstance;
+    private static final FirebaseDatabase databaseInstance = FirebaseDatabase.getInstance();
+    public FirebaseCRUD(){
+//        databaseInstance.setPersistenceEnabled(true);
     }
     public void postUserSchedule(String userId, Schedule schedule){
         DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child(userId);

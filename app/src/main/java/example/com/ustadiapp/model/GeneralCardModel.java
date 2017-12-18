@@ -26,7 +26,7 @@ public class GeneralCardModel {
         this.isAvailable = isAvailable;
     }
 
-    public GeneralCardModel(String time, String venu, String subject, String day, int slot, boolean isAvailable, String id) {
+    public GeneralCardModel(String time, String venu, String subject, String day, int slot, boolean isAvailable, String id,String name) {
         this.time = time;
         this.venu = venu;
         this.subject = subject;
@@ -34,6 +34,7 @@ public class GeneralCardModel {
         this.slot = slot;
         this.isAvailable = isAvailable;
         this.id = id;
+        this.name=name;
     }
 
     public GeneralCardModel(String time, String venu, String subject, String day, int slot, String name) {
@@ -100,5 +101,13 @@ public class GeneralCardModel {
         public void setSubject(String subject) {
             this.subject = subject;
         }
+
+    public String getId() {
+        return id;
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}
 

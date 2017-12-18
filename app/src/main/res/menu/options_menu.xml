@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+        <item
+        android:id="@+id/action_dropdown0"
+        android:icon="@drawable/ic_action_update"
+        android:title="@string/text_more_upload"
+        app:showAsAction="always"/><item
+            android:id="@+id/action_dropdown1"
+            android:icon="@drawable/ic_action_user"
+            android:title="@string/text_more_myduty"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/action_dropdown2"
+            android:icon="@drawable/ic_action_group"
+            android:title="@string/text_more_allduty"
+            app:showAsAction="ifRoom"/>
+        <item
+            android:id="@+id/action_dropdown3"
+            android:title="@string/text_more_settings"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/action_dropdown4"
+            android:title="@string/text_more_logout"
+            app:showAsAction="never"/>
+
+</menu>

@@ -1,13 +1,20 @@
 package example.com.ustadiapp;
 
 
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.view.menu.MenuBuilder;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.Window;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
@@ -19,6 +26,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -71,13 +79,21 @@ public class MainActivity extends AppCompatActivity {
             userId=mAuth.getCurrentUser().getUid();
 
         }
-        FirebaseCRUD crud = new FirebaseCRUD(database);
-        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+
+        if (getIntent().getBooleanExtra("FLAG",false)){
+            Intent intent = new Intent(this,MarkAvailableActivity.class);
+            startActivity(intent);
+        }
+        FirebaseCRUD crud = new FirebaseCRUD();
+//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
+                UpdateUI task = new UpdateUI(getApplication(),userId,schedule);
+                task.execute();
                 Log.d(LOG,"Dataset Changed"+ schedule.getDate()+schedule.getList().size());
+
             }
 
             @Override
@@ -85,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-        UpdateUI task = new UpdateUI(this,database,userId);
-        task.execute();
+
 
 
 //        FirebaseCRUD firebaseCRUD = new FirebaseCRUD(database);
@@ -218,61 +233,17 @@ public class MainActivity extends AppCompatActivity {
 
     public class UpdateUI extends AsyncTask<Void,Void,Void> {
         private Context context;
-        private FirebaseDatabase database;
         private String userId;
         private Schedule schedule;
         private ArrayList<GeneralCardModel> dataList;
-        private  static final String DATABASE_URL="https://ustadiapp.firebaseio.com/schedule/dutyTable.json";
-
-
-        public UpdateUI(Context context,FirebaseDatabase database, String userId){
+        public UpdateUI(Context context,String userId,Schedule schedule){
             this.context=context;
-            this.database=database;
+            this.schedule=schedule;
             this.userId=userId;
             this.dataList = new ArrayList<>();
         }
-        public String downloadJson(String strUrl) throws IOException {
-            StringBuffer stringBuffer = new StringBuffer();
-            URL url = new URL(strUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            InputStream stream = connection.getInputStream();
-            int data = stream.read();
-            while (data != -1) {
-                stringBuffer.append((char) data);
-                data = stream.read();
-            }
-            stream.close();
-            return stringBuffer.toString();
-        }
-        public Schedule parseJsontoJava(String jsonStr){
-            Schedule response;
-            Gson gson;
-            if (jsonStr!=null && !jsonStr.equals("")){
-                gson= new Gson();
-                response= gson.fromJson(jsonStr,Schedule.class);
-                return response;
-            }
-            return null;
-        }
-
         @Override
         protected Void doInBackground(Void... params) {
-            try {
-                String jsonDatabase = downloadJson(DATABASE_URL);
-                schedule=parseJsontoJava(jsonDatabase);
-                Log.d(LOG,"data downloaded");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
             if (schedule!=null) {
                 for (Day day : schedule.getList()) {
                     String time;
@@ -292,13 +263,23 @@ public class MainActivity extends AppCompatActivity {
                         id=duty.getUser().getUserId();
                         username=duty.getUser().getUserName();
                         isAvailable=duty.isAvailable();
-                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,username));
+//                        Log.i(LOG,username);
+                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,id,username));
                     }
 
                 }
             }
+
+
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            recyclerView.setAdapter(new CustomMyViewAdapter(context,dataList));
+            recyclerView.setAdapter(new CustomGeneralViewAdapter(context,dataList,getFragmentManager()));
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
@@ -307,8 +288,17 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
- }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater= getMenuInflater();
+        inflater.inflate(R.menu.options_menu,menu);
+        return true;
+
+    }
+
+
+}
 
  /* Alert Dialogue for cards */
 
@@ -320,3 +310,19 @@ public class MainActivity extends AppCompatActivity {
 //        EditText editText = (EditText) alertDialog.findViewById(R.id.label_field);
 //        editText.setText("test label");
 //        alertDialog.show();
+
+//ic boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        switch (id) {
+//        case R.id.action_dropdown1:
+//        ...
+//        return true;
+//
+//        case R.id.action_dropdown2:
+//        ...
+//        return true;
+//        ...
+//
+//default:
+//        return super.onOptionsItemSelected(item);
+//        }
