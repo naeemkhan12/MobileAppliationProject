@@ -8,12 +8,15 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
+import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 
 import com.firebase.ui.auth.AuthUI;
@@ -103,99 +106,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-//        FirebaseCRUD firebaseCRUD = new FirebaseCRUD(database);
-//        ArrayList<Duty> dutyArrayList = new ArrayList<>();
-//        ArrayList<Day> dayArrayList = new ArrayList<>();
-//        dutyArrayList.add(new Duty("",1,"","9:00","10:15",true));
-//        dutyArrayList.add(new Duty("",2,"","10:30","11:45",true));
-//        dutyArrayList.add(new Duty("",3,"","12:00","1:15",true));
-//        dutyArrayList.add(new Duty("",4,"","2:15","3:30",true));
-//        dutyArrayList.add(new Duty("",5,"","3:45","5:00",true));
-//        dayArrayList.add(new Day(dutyArrayList,1));
-//        dayArrayList.add(new Day(dutyArrayList,2));
-//        dayArrayList.add(new Day(dutyArrayList,3));
-//        dayArrayList.add(new Day(dutyArrayList,4));
-//        dayArrayList.add(new Day(dutyArrayList,5));
-//
-//        Schedule schedule = new Schedule("12-01-2017", dayArrayList,5);
-//        firebaseCRUD.postUserSchedule(userId,schedule);
-//        firebaseCRUD.getUserRefrence(userId).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                if (dataSnapshot!=null){
-//                    for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-//                        Log.i(LOG,"key: "+snapshot.getKey());
-//                    }
-//                }
-//
-//                Log.i(LOG,"DATA UPDATED");
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//
-//
-//
-
-
-
-
-
-
-
-
-
-
-
-//
-//        ArrayList<MyCardModel> models= new ArrayList<>();
-//        models.add(new MyCardModel("3:00 4:00","LH5","SD1","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH3","SD2","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH1","SV","WED",1));
-//        models.add(new MyCardModel("3:00 4:00","LH1","PHYSICS","WED",1));
-//
-//        recyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-//        recyclerView.setAdapter(new CustomMyViewAdapter(this,models));
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-//                // Write a message to the database
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("schedule");
-
-
-//        ArrayList<Duty> list = new ArrayList<>();
-//        list.add(new Duty("LH1",2,"SD1","12:35",true));
-//        list.add(new Duty("LH1",3,"SD2","12:35",true));
-//        list.add(new Duty("LH3",5,"NNFS","12:35",true));
-//        list.add(new Duty("LH3",4,"PHYSICS","13:00",true));
-//        Schedule schedule = new Schedule("12-10-2017",list,5);
-
-//        myRef.setValue(schedule);
-
-//        myRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                // This method is called once with the initial value and again
-//                // whenever data at this location is updated.
-//                Schedule value = dataSnapshot.getValue(Schedule.class);
-//                Log.d(TAG, "Value is: " + value.toString());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError error) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", error.toException());
-//            }
-//        });
-
     }
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
@@ -269,9 +179,6 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
-
-
-
             return null;
         }
 
@@ -281,11 +188,6 @@ public class MainActivity extends AppCompatActivity {
             recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
             recyclerView.setAdapter(new CustomGeneralViewAdapter(context,dataList,getFragmentManager()));
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
-
-
-
-
         }
     }
 
@@ -293,11 +195,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater= getMenuInflater();
         inflater.inflate(R.menu.options_menu,menu);
+
         return true;
 
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(LOG,"menu item id: "+item.getItemId());
+        return super.onOptionsItemSelected(item);
+    }
 }
 
  /* Alert Dialogue for cards */
