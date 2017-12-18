@@ -108,21 +108,21 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                                     Log.i(LOG,"available radio clicked");
                                     return true;
                                 case R.id.swap_radio:
-//                                    ListView listView = new ListView(context);
-//                                    ArrayList<AvailableListModel> values = new ArrayList<AvailableListModel>();
-//                                    values.add(new AvailableListModel("1","Naeem","LH3",2));
-//                                    values.add(new AvailableListModel("1","Bashir","LH4",1));
-//                                    values.add(new AvailableListModel("1","Raza","LH5",3));
-//                                    values.add(new AvailableListModel("1","Jhanzeb","LH6",4));
-//                                    AvailableListAdapter adapter = new AvailableListAdapter(context,values,inflater);
-//                                    listView.setAdapter(adapter);
-//                                    listView.setOnClickListener(new View.OnClickListener() {
-//                                        @Override
-//                                        public void onClick(View v) {
-//                                            Log.i(LOG,"Item clicked: ");
-//                                        }
-//                                    });
-//                                    showDialog(listView);
+                                    ListView listView = new ListView(context);
+                                    ArrayList<AvailableListModel> values = new ArrayList<AvailableListModel>();
+                                    values.add(new AvailableListModel("1","Naeem","LH3",2));
+                                    values.add(new AvailableListModel("1","Bashir","LH4",1));
+                                    values.add(new AvailableListModel("1","Raza","LH5",3));
+                                    values.add(new AvailableListModel("1","Jhanzeb","LH6",4));
+                                    AvailableListAdapter adapter = new AvailableListAdapter(context,values,inflater);
+                                    listView.setAdapter(adapter);
+                                    listView.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Log.i(LOG,"Item clicked: ");
+                                        }
+                                    });
+                                    showDialog(listView);
 
                                     Log.i(LOG,"swap radio clicked");
                                     return true;

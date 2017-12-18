@@ -72,14 +72,14 @@ public class MainActivity extends AppCompatActivity {
             userId=mAuth.getCurrentUser().getUid();
 //            myRef = database.getReference("schedule/").child(mAuth.getCurrentUser().getUid());
         }else {
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setAvailableProviders(providers)
-                            .setTheme(R.style.signup_theme)
-                            .build(),
-                    RC_SIGN_IN);
-            userId=mAuth.getCurrentUser().getUid();
+//            startActivityForResult(
+//                    AuthUI.getInstance()
+//                            .createSignInIntentBuilder()
+//                            .setAvailableProviders(providers)
+//                            .setTheme(R.style.signup_theme)
+//                            .build(),
+//                    RC_SIGN_IN);
+//            userId=mAuth.getCurrentUser().getUid();
 
         }
 
@@ -200,11 +200,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(LOG,"menu item id: "+item.getItemId());
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        Log.i(LOG,"menu item id: "+item.getItemId());
+//        return super.onOptionsItemSelected(item);
+//    }
 }
 
  /* Alert Dialogue for cards */
