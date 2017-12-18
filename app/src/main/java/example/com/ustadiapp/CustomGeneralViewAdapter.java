@@ -7,13 +7,8 @@ package example.com.ustadiapp;
 //public class CustomGeneralViewAdapter {
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.graphics.Color;
-import android.support.annotation.ColorRes;
-import android.support.annotation.StringRes;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -56,11 +52,8 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     @Override
     public void onBindViewHolder(CustomGeneralViewHolder holder, int position) {
         holder.time.setText(list.get(position).getTime());
+        holder.date.setText(list.get(position).getDate().substring(0,2));
         holder.venu.setText(list.get(position).getVenu());
-        holder.subject.setText(list.get(position).getSubject());
-        holder.day.setText(list.get(position).getDay());
-        holder.slot.setText(list.get(position).getSlot()+"");
-        Log.i(LOG,list.get(position).getName());
         holder.name.setText(list.get(position).getName());
     }
 
@@ -76,19 +69,15 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
     public class CustomGeneralViewHolder extends RecyclerView.ViewHolder{
         private TextView time;
+        private TextView date;
         private TextView venu;
-        private TextView subject;
-        private TextView day;
-        private TextView slot;
         private TextView name;
         private ImageView imageView;
         public CustomGeneralViewHolder(final View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
-            venu = (TextView) itemView.findViewById(R.id.name);
-            subject = (TextView) itemView.findViewById(R.id.subj);
-            day = (TextView) itemView.findViewById(R.id.day);
-            slot = (TextView) itemView.findViewById(R.id.slot);
+            venu = (TextView) itemView.findViewById(R.id.venu);
+            date = (TextView) itemView.findViewById(R.id.date);
             name=(TextView)itemView.findViewById(R.id.name);
              imageView=(ImageView)itemView.findViewById(R.id.launcher);
             imageView.setOnClickListener(new View.OnClickListener() {
@@ -109,17 +98,18 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                                     return true;
                                 case R.id.swap_radio:
                                     ListView listView = new ListView(context);
-                                    ArrayList<AvailableListModel> values = new ArrayList<AvailableListModel>();
+                                    final ArrayList<AvailableListModel> values = new ArrayList<AvailableListModel>();
                                     values.add(new AvailableListModel("1","Naeem","LH3",2));
                                     values.add(new AvailableListModel("1","Bashir","LH4",1));
                                     values.add(new AvailableListModel("1","Raza","LH5",3));
                                     values.add(new AvailableListModel("1","Jhanzeb","LH6",4));
                                     AvailableListAdapter adapter = new AvailableListAdapter(context,values,inflater);
                                     listView.setAdapter(adapter);
-                                    listView.setOnClickListener(new View.OnClickListener() {
+                                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
-                                        public void onClick(View v) {
-                                            Log.i(LOG,"Item clicked: ");
+                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
                                         }
                                     });
                                     showDialog(listView);

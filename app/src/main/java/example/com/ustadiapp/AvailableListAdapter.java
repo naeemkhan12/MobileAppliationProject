@@ -3,19 +3,14 @@ package example.com.ustadiapp;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.zip.Inflater;
+
 import example.com.ustadiapp.model.AvailableListModel;
 public class AvailableListAdapter extends ArrayAdapter<AvailableListModel>{
     private final Context context;
@@ -36,7 +31,7 @@ public class AvailableListAdapter extends ArrayAdapter<AvailableListModel>{
         }
         TextView name = (TextView) convertView.findViewById(R.id.username);
         TextView venu = (TextView) convertView.findViewById(R.id.assigned_at);
-        TextView slot = (TextView) convertView.findViewById(R.id.slot);
+        TextView slot = (TextView) convertView.findViewById(R.id.date);
         name.setText(values.get(position).getUserName());
         venu.setText(values.get(position).getVenu());
         slot.setText(values.get(position).getSlot()+"");

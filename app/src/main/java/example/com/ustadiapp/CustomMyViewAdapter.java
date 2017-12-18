@@ -61,8 +61,8 @@ public class CustomMyViewAdapter extends RecyclerView.Adapter<CustomMyViewAdapte
             time = (TextView) itemView.findViewById(R.id.time);
             venu = (TextView) itemView.findViewById(R.id.name);
             subject = (TextView) itemView.findViewById(R.id.subj);
-            day = (TextView) itemView.findViewById(R.id.day);
-            slot = (TextView) itemView.findViewById(R.id.slot);
+            day = (TextView) itemView.findViewById(R.id.venu);
+            slot = (TextView) itemView.findViewById(R.id.date);
         }
 
 

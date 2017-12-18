@@ -57,8 +57,8 @@ public class CustomAvailableViewAdapter extends RecyclerView.Adapter<CustomAvail
         public CustomAvailableViewHolder(View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
-            day = (TextView) itemView.findViewById(R.id.day);
-            slot = (TextView) itemView.findViewById(R.id.slot);
+            day = (TextView) itemView.findViewById(R.id.venu);
+            slot = (TextView) itemView.findViewById(R.id.date);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
         }
 

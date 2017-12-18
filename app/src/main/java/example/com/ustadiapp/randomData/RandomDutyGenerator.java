@@ -37,7 +37,7 @@ public class RandomDutyGenerator {
                 Duty duty = new Duty(venu[(int) randInt],getRandomSlot[j],subject[(int) randInt],true,randomUser[(int) randInt]);
                 duties.add(duty);
             }
-            Day day = new Day(duties,i);
+            Day day = new Day(duties,i,"0"+i+1+"-05-2017");
             days.add(day);
         }
 

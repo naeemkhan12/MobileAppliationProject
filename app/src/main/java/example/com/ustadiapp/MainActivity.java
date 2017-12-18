@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "TESTLOG";
     private static final String[] DAYS={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     private RecyclerView recyclerView;
+    private Context context;
     private String userId;
     // Choose authentication providers
     private List<AuthUI.IdpConfig> providers = Arrays.asList(
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.context=this;
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
@@ -88,12 +90,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
         FirebaseCRUD crud = new FirebaseCRUD();
-//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
-                UpdateUI task = new UpdateUI(getApplication(),userId,schedule);
+                UpdateUI task = new UpdateUI(context,userId,schedule);
                 task.execute();
                 Log.d(LOG,"Dataset Changed"+ schedule.getDate()+schedule.getList().size());
 
@@ -160,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
                     String venu;
                     String subject;
                     String dayname = DAYS[day.getId()];
+                    String date=day.getDate();
                     day.getId();
                     int slot;
                     String id;
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                         username=duty.getUser().getUserName();
                         isAvailable=duty.isAvailable();
 //                        Log.i(LOG,username);
-                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,id,username));
+                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,id,username,date));
                     }
 
                 }

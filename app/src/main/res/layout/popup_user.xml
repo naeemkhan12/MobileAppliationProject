@@ -5,7 +5,7 @@
     android:layout_width="match_parent" android:layout_height="wrap_content"
     android:padding="5dp">
     <TextView
-        android:id="@+id/slot"
+        android:id="@+id/date"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/circle"
@@ -35,7 +35,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="8dp"
         app:layout_constraintVertical_bias="0.36"
-        app:layout_constraintLeft_toRightOf="@+id/slot"
+        app:layout_constraintLeft_toRightOf="@+id/date"
         android:layout_marginLeft="8dp"
         app:layout_constraintHorizontal_bias="0.035" />
 

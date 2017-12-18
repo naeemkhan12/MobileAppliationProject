@@ -8,14 +8,25 @@ import java.util.ArrayList;
 
 public class Day {
     private ArrayList<Duty> duties;
+    private String date;
     private int id;
 
-    public Day(ArrayList<Duty> duties, int id) {
+    public Day(ArrayList<Duty> duties, int id,String date) {
         this.duties = duties;
         this.id=id;
+        this.date=date;
+
     }
     public Day(){
 
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public int getId() {

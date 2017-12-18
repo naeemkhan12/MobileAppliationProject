@@ -14,6 +14,7 @@ public class GeneralCardModel {
         private String name;
         private boolean isAvailable;
         private String id;
+        private String date;
 
         public GeneralCardModel(){
 
@@ -26,7 +27,7 @@ public class GeneralCardModel {
         this.isAvailable = isAvailable;
     }
 
-    public GeneralCardModel(String time, String venu, String subject, String day, int slot, boolean isAvailable, String id,String name) {
+    public GeneralCardModel(String time, String venu, String subject, String day, int slot, boolean isAvailable, String id,String name,String date) {
         this.time = time;
         this.venu = venu;
         this.subject = subject;
@@ -35,6 +36,7 @@ public class GeneralCardModel {
         this.isAvailable = isAvailable;
         this.id = id;
         this.name=name;
+        this.date=date;
     }
 
     public GeneralCardModel(String time, String venu, String subject, String day, int slot, String name) {
@@ -45,6 +47,14 @@ public class GeneralCardModel {
             this.slot=slot;
             this.name=name;
         }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     public boolean isAvailable() {
         return isAvailable;

@@ -12,7 +12,7 @@
        tools:layout_editor_absoluteY="0dp"
        tools:layout_editor_absoluteX="0dp">
        <TextView
-           android:id="@+id/slot"
+           android:id="@+id/date"
            android:layout_width="50dp"
            android:layout_height="50dp"
            android:background="@drawable/circle"
@@ -26,14 +26,14 @@
            android:layout_marginTop="8dp" />
 
        <TextView
-           android:id="@+id/day"
+           android:id="@+id/venu"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
            android:text="@string/text_day"
            android:textSize="@dimen/material_text_subhead"
            app:layout_constraintTop_toBottomOf="@+id/name"
            app:layout_constraintBottom_toBottomOf="parent"
-           app:layout_constraintLeft_toRightOf="@+id/slot"
+           app:layout_constraintLeft_toRightOf="@+id/date"
            android:layout_marginStart="7dp"
            android:layout_marginLeft="7dp" />
 
@@ -44,8 +44,8 @@
            android:textSize="@dimen/material_text_headline"
            android:text="@string/text_venu"
            app:layout_constraintTop_toBottomOf="@+id/time"
-           app:layout_constraintBottom_toTopOf="@+id/day"
-           app:layout_constraintLeft_toRightOf="@+id/slot"
+           app:layout_constraintBottom_toTopOf="@+id/venu"
+           app:layout_constraintLeft_toRightOf="@+id/date"
            android:layout_marginStart="7dp"
            android:layout_marginLeft="7dp" />
 
@@ -57,7 +57,7 @@
            android:textSize="@dimen/material_text_body2"
            app:layout_constraintTop_toTopOf="parent"
            app:layout_constraintBottom_toTopOf="@+id/name"
-           app:layout_constraintLeft_toRightOf="@+id/slot"
+           app:layout_constraintLeft_toRightOf="@+id/date"
            android:layout_marginStart="7dp"
            android:layout_marginLeft="7dp" />
 
