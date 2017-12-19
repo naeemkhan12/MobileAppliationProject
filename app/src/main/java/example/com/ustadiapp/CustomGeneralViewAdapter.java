@@ -9,6 +9,7 @@ package example.com.ustadiapp;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,6 +67,16 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         AlertDialog.Builder builder= new AlertDialog.Builder(context);
         builder.setCancelable(true).setView(listView).create().show();
     }
+    public ArrayList<AvailableListModel> searchAvailables(int slot,String date,String userId){
+        ArrayList<AvailableListModel> availables = new ArrayList<>();
+        int tDate = Integer.parseInt(date.substring(0,2));
+        for (GeneralCardModel item: list) {
+            if (!item.getId().equals(userId) && item.getSlot()!=slot && tDate<=Integer.parseInt(item.getDate().substring(0,2))){
+                availables.add(new AvailableListModel(item.getId(),item.getName(),item.getVenu(),item.getSlot()));
+            }
+        }
+        return availables;
+    }
 
     public class CustomGeneralViewHolder extends RecyclerView.ViewHolder{
         private TextView time;
@@ -98,18 +109,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                                     return true;
                                 case R.id.swap_radio:
                                     ListView listView = new ListView(context);
-                                    final ArrayList<AvailableListModel> values = new ArrayList<AvailableListModel>();
-                                    values.add(new AvailableListModel("1","Naeem","LH3",2));
-                                    values.add(new AvailableListModel("1","Bashir","LH4",1));
-                                    values.add(new AvailableListModel("1","Raza","LH5",3));
-                                    values.add(new AvailableListModel("1","Jhanzeb","LH6",4));
-                                    AvailableListAdapter adapter = new AvailableListAdapter(context,values,inflater);
+                                    AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(list.get(getAdapterPosition()).getSlot(),list.get(getAdapterPosition()).getDate(),list.get(getAdapterPosition()).getId()),inflater);
                                     listView.setAdapter(adapter);
                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override
                                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
+//                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
                                         }
                                     });
                                     showDialog(listView);
@@ -120,8 +126,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                             return false;
                         }
                     });
-//                    DialogFragment fragment= new CustomAlertDialog();
-//                    fragment.show(manager,"ATTENTION LADIES AND GENTLEMEN !!");
 
                 }
             });
