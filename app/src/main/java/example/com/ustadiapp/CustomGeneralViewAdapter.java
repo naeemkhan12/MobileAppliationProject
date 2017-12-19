@@ -25,7 +25,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import example.com.ustadiapp.model.AvailableListModel;
+import example.com.ustadiapp.model.Day;
+import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.GeneralCardModel;
+import example.com.ustadiapp.model.Schedule;
+import example.com.ustadiapp.model.User;
 
 public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneralViewAdapter.CustomGeneralViewHolder> {
 
@@ -34,13 +38,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<GeneralCardModel> list;
+    private ArrayList<Duty> list;
     private FragmentManager manager;
 
-    public CustomGeneralViewAdapter(Context context, ArrayList<GeneralCardModel> list, FragmentManager manager){
+    public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager){
         this.context=context;
-        this.list=list;
         this.manager=manager;
+        this.list=list;
         this.inflater= LayoutInflater.from(context);
 
     }
@@ -52,10 +56,10 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
     @Override
     public void onBindViewHolder(CustomGeneralViewHolder holder, int position) {
-        holder.time.setText(list.get(position).getTime());
-        holder.date.setText(list.get(position).getDate().substring(0,2));
+        holder.time.setText(list.get(position).getSlot().getStartTime()+" "+list.get(position).getSlot().getEndTime());
+        holder.date.setText(list.get(position).getDate().getDay()+"");
         holder.venu.setText(list.get(position).getVenu());
-        holder.name.setText(list.get(position).getName());
+        holder.name.setText(list.get(position).getUser().getUserName());
     }
 
     @Override
@@ -67,12 +71,12 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         AlertDialog.Builder builder= new AlertDialog.Builder(context);
         builder.setCancelable(true).setView(listView).create().show();
     }
-    public ArrayList<AvailableListModel> searchAvailables(int slot,String date,String userId){
+    public ArrayList<AvailableListModel> searchAvailables(int position){
         ArrayList<AvailableListModel> availables = new ArrayList<>();
-        int tDate = Integer.parseInt(date.substring(0,2));
-        for (GeneralCardModel item: list) {
-            if (!item.getId().equals(userId) && item.getSlot()!=slot && tDate<=Integer.parseInt(item.getDate().substring(0,2))){
-                availables.add(new AvailableListModel(item.getId(),item.getName(),item.getVenu(),item.getSlot()));
+
+        for (Duty item: list) {
+            if (item.getSlot()!=list.get(position).getSlot()&& item.getUser()!=list.get(position).getUser()){
+                availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId()));
             }
         }
         return availables;
@@ -109,7 +113,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                                     return true;
                                 case R.id.swap_radio:
                                     ListView listView = new ListView(context);
-                                    AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(list.get(getAdapterPosition()).getSlot(),list.get(getAdapterPosition()).getDate(),list.get(getAdapterPosition()).getId()),inflater);
+                                    AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(getAdapterPosition()),inflater);
                                     listView.setAdapter(adapter);
                                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                         @Override

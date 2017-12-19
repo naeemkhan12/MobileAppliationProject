@@ -4,16 +4,26 @@ package example.com.ustadiapp.model;
  * Created by naeem on 12/18/17.
  */
 
-public class AvailableListModel extends User {
+public class AvailableListModel {
 
     private String venu;
     private int slot;
-    public AvailableListModel(String userId,String userName,String venu,int slot ){
-        super();
-        setUserId(userId);
-        setUserName(userName);
+    private User user;
+    public AvailableListModel(User user,String venu,int slot ){
         this.venu=venu;
         this.slot=slot;
+        this.user=user;
+    }
+
+    public AvailableListModel() {
+    }
+
+    public String getVenu() {
+        return venu;
+    }
+
+    public void setVenu(String venu) {
+        this.venu = venu;
     }
 
     public int getSlot() {
@@ -24,11 +34,11 @@ public class AvailableListModel extends User {
         this.slot = slot;
     }
 
-    public String getVenu() {
-        return venu;
+    public User getUser() {
+        return user;
     }
 
-    public void setVenu(String venu) {
-        this.venu = venu;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

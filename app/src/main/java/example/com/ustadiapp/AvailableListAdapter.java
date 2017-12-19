@@ -32,7 +32,7 @@ public class AvailableListAdapter extends ArrayAdapter<AvailableListModel>{
         TextView name = (TextView) convertView.findViewById(R.id.username);
         TextView venu = (TextView) convertView.findViewById(R.id.assigned_at);
         TextView slot = (TextView) convertView.findViewById(R.id.date);
-        name.setText(values.get(position).getUserName());
+        name.setText(values.get(position).getUser().getUserName());
         venu.setText(values.get(position).getVenu());
         slot.setText(values.get(position).getSlot()+"");
         return convertView;

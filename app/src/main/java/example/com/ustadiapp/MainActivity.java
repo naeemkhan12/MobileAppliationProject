@@ -91,14 +91,12 @@ public class MainActivity extends AppCompatActivity {
         }
         FirebaseCRUD crud = new FirebaseCRUD();
         crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
-                UpdateUI task = new UpdateUI(context,userId,schedule);
-                task.execute();
-                Log.d(LOG,"Dataset Changed"+ schedule.getDate()+schedule.getList().size());
-
+                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,schedule.getList(),getFragmentManager()));
             }
 
             @Override
@@ -106,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
     }
@@ -141,59 +140,6 @@ public class MainActivity extends AppCompatActivity {
 ////            showSnackbar(R.string.unknown_sign_in_response);
 //        }
 //    }
-
-
-    public class UpdateUI extends AsyncTask<Void,Void,Void> {
-        private Context context;
-        private String userId;
-        private Schedule schedule;
-        private ArrayList<GeneralCardModel> dataList;
-        public UpdateUI(Context context,String userId,Schedule schedule){
-            this.context=context;
-            this.schedule=schedule;
-            this.userId=userId;
-            this.dataList = new ArrayList<>();
-        }
-        @Override
-        protected Void doInBackground(Void... params) {
-            if (schedule!=null) {
-                for (Day day : schedule.getList()) {
-                    String time;
-                    String venu;
-                    String subject;
-                    String dayname = DAYS[day.getId()];
-                    String date=day.getDate();
-                    day.getId();
-                    int slot;
-                    String id;
-                    String username;
-                    boolean isAvailable;
-                    for (Duty duty : day.getDuties()) {
-                        time = duty.getSlot().getStartTime()+" "+duty.getSlot().getEndTime();
-                        venu = duty.getVenu();
-                        subject = duty.getSubject();
-                        slot = duty.getSlot().getId();
-                        id=duty.getUser().getUserId();
-                        username=duty.getUser().getUserName();
-                        isAvailable=duty.isAvailable();
-//                        Log.i(LOG,username);
-                        dataList.add(new GeneralCardModel(time, venu, subject, dayname, slot,isAvailable,id,username,date));
-                    }
-
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-            recyclerView.setAdapter(new CustomGeneralViewAdapter(context,dataList,getFragmentManager()));
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater= getMenuInflater();

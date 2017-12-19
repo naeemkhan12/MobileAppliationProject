@@ -16,6 +16,9 @@ public class GeneralCardModel {
         private String id;
         private String date;
 
+
+        private User user;
+
         public GeneralCardModel(){
 
         }

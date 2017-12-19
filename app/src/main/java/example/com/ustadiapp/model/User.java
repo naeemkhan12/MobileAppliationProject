@@ -7,13 +7,28 @@ package example.com.ustadiapp.model;
 public class User {
     private String userId;
     private String userName;
+    private String email;
+    private boolean isAvailable;
 
-    public User(String userId, String userName) {
+    public User(String userId, String userName,String email,boolean isAvailable) {
         this.userId = userId;
         this.userName = userName;
+        this.email=email;
+        this.isAvailable=isAvailable;
     }
-
     public User() {
+    }
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+    public void setAvailable(boolean available) {
+        isAvailable = available;
+    }
+    public String getEmail() {
+        return email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getUserId() {
