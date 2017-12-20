@@ -72,9 +72,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         return list.size();
     }
 
-    public void showDialog(View listView){
+    public void showDialog(View listView,String title){
         AlertDialog.Builder builder= new AlertDialog.Builder(context);
-        builder.setCancelable(true).setView(listView).create().show();
+        builder.setCancelable(true)
+                .setTitle(title)
+                .setView(listView).
+                create().
+                show();
     }
     public ArrayList<AvailableListModel> searchAvailables(int position){
         ArrayList<AvailableListModel> availables = new ArrayList<>();
@@ -113,6 +117,8 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                         public boolean onMenuItemClick(MenuItem item) {
                             switch (item.getItemId()){
                                 case R.id.available_radio:
+                                    View view = inflater.inflate(R.layout.reason_pop,null);
+                                    showDialog(view,"Reason for Unavaiablity");
 //                                    itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.material_lime_a700));
                                     Log.i(LOG,"available radio clicked");
                                     return true;
@@ -127,7 +133,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 //                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
                                         }
                                     });
-                                    showDialog(listView);
+                                    showDialog(listView,"Select Person to swap with");
 
                                     Log.i(LOG,"swap radio clicked");
                                     return true;
@@ -141,7 +147,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                                     try {
                                         Date date = sdf.parse(testStr);
                                         long timeInMills = date.getTime();
-                                        new SetAlarm(context).setAlarm(timeInMills);
+//                                        new SetAlarm(context).setAlarm(timeInMills);
                                     } catch (ParseException e) {
                                         Log.i(LOG,"parse error");
                                         e.printStackTrace();
