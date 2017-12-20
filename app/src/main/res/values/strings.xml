@@ -13,6 +13,7 @@
     <string name="sign_up">SIGN UP</string>
     <string name="radio_available">Available for duty</string>
     <string name="radio_swap">Swap with Others</string>
+    <string name="radio_alarm">Set Alarm</string>
     <string name="text_username">Username</string>
 
     <!--main activity main layout-->

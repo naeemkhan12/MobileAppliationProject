@@ -1,6 +1,7 @@
 package example.com.ustadiapp;
 
 
+import android.app.AlarmManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -44,8 +45,11 @@ import example.com.ustadiapp.model.Schedule;
 import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
 
-public class MainActivity extends AppCompatActivity {
 
+
+//set alarm: https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time
+
+public class MainActivity extends AppCompatActivity {
     private static final String LOG="TESTLOG";
     private static final int RC_SIGN_IN = 123;
     private static final String TAG = "TESTLOG";
@@ -108,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 //    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 //        super.onActivityResult(requestCode, resultCode, data);
 //        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
@@ -182,3 +187,6 @@ public class MainActivity extends AppCompatActivity {
 //default:
 //        return super.onOptionsItemSelected(item);
 //        }
+
+
+

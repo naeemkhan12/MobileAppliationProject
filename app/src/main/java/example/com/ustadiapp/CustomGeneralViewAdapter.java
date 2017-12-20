@@ -6,8 +6,10 @@ package example.com.ustadiapp;
 
 //public class CustomGeneralViewAdapter {
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
@@ -22,7 +24,10 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import example.com.ustadiapp.model.AvailableListModel;
 import example.com.ustadiapp.model.Day;
@@ -75,7 +80,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         ArrayList<AvailableListModel> availables = new ArrayList<>();
 
         for (Duty item: list) {
-            if (item.getSlot()!=list.get(position).getSlot()&& item.getUser()!=list.get(position).getUser()){
+            if (item.getSlot().getId()!=list.get(position).getSlot().getId()&& !item.getUser().getUserId().equals(list.get(position).getUser().getUserId())){
                 availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId()));
             }
         }
@@ -126,6 +131,22 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
                                     Log.i(LOG,"swap radio clicked");
                                     return true;
+                                case R.id.set_alarm:
+                                    int pos = getAdapterPosition();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                                    String dateStr = list.get(pos).getDate().toString()+" "+list.get(pos).getSlot().getStartTime()+":00";
+                                    String testStr = "2017/12/20 01:25:00";
+                                    Log.i(LOG,"Date: "+dateStr);
+
+                                    try {
+                                        Date date = sdf.parse(testStr);
+                                        long timeInMills = date.getTime();
+                                        new SetAlarm(context).setAlarm(timeInMills);
+                                    } catch (ParseException e) {
+                                        Log.i(LOG,"parse error");
+                                        e.printStackTrace();
+                                    }
+//        long timeInMillis = date.getTime();
                             }
                             return false;
                         }

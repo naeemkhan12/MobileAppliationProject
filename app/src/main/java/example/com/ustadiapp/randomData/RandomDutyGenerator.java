@@ -25,10 +25,11 @@ public class RandomDutyGenerator {
         String[] subjects = {"Physics","Math","Chem","Bio","SD"};
         String[] venus ={"Lab1","Lab2","LH1","LH2","LH3"};
         String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
-        Date[] dates = {new Date(01,01,2011),new Date(02,01,2011),new Date(03,01,2011),new Date(04,01,2011),new Date(05,01,2011)};
+        Date[] dates = {new Date("01","01","2011"),new Date("02","01","2011"),new Date("03","01","2011"),new Date("04","01","2011"),new Date("05","01","2011")};
         ArrayList<Duty> duties = new ArrayList<>();
         for (int i=0;i<5;i++){
-            int randInt= (int)Math.random()*5;
+            double random= Math.random()*5;
+            int randInt = (int) random;
             duties.add(new Duty(venus[randInt],slots[randInt],subjects[randInt],users[randInt],dates[randInt],days[randInt]));
             Log.i("TESTLOG",randInt+"");
         }
