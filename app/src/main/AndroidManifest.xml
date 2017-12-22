@@ -3,6 +3,7 @@
     package="example.com.ustadiapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <!-- <meta-data android:name="com.facebook.sdk.ApplicationId" -->

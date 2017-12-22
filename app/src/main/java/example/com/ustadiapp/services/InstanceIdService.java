@@ -20,6 +20,7 @@ import okhttp3.Response;
 
 public class InstanceIdService extends FirebaseInstanceIdService {
     private static final String LOG = "TESTLOG";
+    private static final String EMAIL="naeemr2014@namal.edu.pk";
     private String token;
     private final OkHttpClient client = new OkHttpClient();
 
@@ -42,7 +43,7 @@ public class InstanceIdService extends FirebaseInstanceIdService {
             Log.d(LOG,"Failed");
             Log.d(LOG,response.body().toString());
         }else {
-            Log.d(LOG,"Sucess: "+response.body().string());
+            Log.d(LOG,"Sucess: "+response.body().toString());
         }
     }
     @Override
@@ -51,7 +52,7 @@ public class InstanceIdService extends FirebaseInstanceIdService {
         token = FirebaseInstanceId.getInstance().getToken();
         Log.d(LOG,token);
         try {
-            updateToken("simple@simple.com",token);
+            updateToken(EMAIL,token);
         } catch (Exception e) {
             Log.d(LOG,"Exception Message: "+e.getMessage());
         }

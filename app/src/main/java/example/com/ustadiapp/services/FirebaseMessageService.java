@@ -12,6 +12,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import example.com.ustadiapp.CustomNotification;
+import example.com.ustadiapp.LoginActivity;
 import example.com.ustadiapp.MainActivity;
 import example.com.ustadiapp.MarkAvailableActivity;
 import example.com.ustadiapp.R;
@@ -28,8 +30,10 @@ public class FirebaseMessageService  extends FirebaseMessagingService{
         super.onMessageReceived(remoteMessage);
         if (remoteMessage.getNotification().getBody()!=null){
             Log.i(LOG,"MESSAGE RECEIVED");
-            sendNotification(remoteMessage);
-
+//            sendNotification(remoteMessage);
+            RemoteMessage.Notification notification = remoteMessage.getNotification();
+            CustomNotification customNotification = new CustomNotification(this,"solo");
+            customNotification.sendNotification(notification.getTitle(),notification.getBody(),R.drawable.ic_stat_update);
         }
     }
 
@@ -39,26 +43,5 @@ public class FirebaseMessageService  extends FirebaseMessagingService{
         Log.i(LOG,"SERVICE STARTED");
     }
 
-    private void sendNotification(RemoteMessage remoteMessage) {
-        RemoteMessage.Notification notification = remoteMessage.getNotification();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra("FLAG",true);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.ic_account_box_black_24dp)
-                .setContentTitle(notification.getTitle())
-                .setContentText(notification.getBody())
-                .setAutoCancel(true)
-                .setSound(defaultSoundUri)
-                .setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        notificationManager.notify(0, notificationBuilder.build());
-    }
 }
