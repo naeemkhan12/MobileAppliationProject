@@ -6,10 +6,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import example.com.ustadiapp.model.AvailableModel;
 import example.com.ustadiapp.model.GeneralCardModel;
 
 /**
@@ -21,8 +24,8 @@ public class CustomAvailableViewAdapter extends RecyclerView.Adapter<CustomAvail
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
-    private ArrayList<GeneralCardModel> list;
-    public CustomAvailableViewAdapter(Context context, ArrayList<GeneralCardModel> list){
+    private ArrayList<AvailableModel> list;
+    public CustomAvailableViewAdapter(Context context, ArrayList<AvailableModel> list){
         this.context=context;
         this.list=list;
         this.inflater= LayoutInflater.from(context);
@@ -36,9 +39,9 @@ public class CustomAvailableViewAdapter extends RecyclerView.Adapter<CustomAvail
 
     @Override
     public void onBindViewHolder(CustomAvailableViewHolder holder, int position) {
-        holder.time.setText(list.get(position).getTime());
+        holder.time.setText(list.get(position).getSlot().getStartTime()+" "+list.get(position).getSlot().getEndTime());
         holder.day.setText(list.get(position).getDay());
-        holder.slot.setText(list.get(position).getSlot()+"");
+        holder.date.setText(list.get(position).getDate().getDay());
         holder.checkBox.setChecked(list.get(position).isAvailable());
     }
 
@@ -52,14 +55,22 @@ public class CustomAvailableViewAdapter extends RecyclerView.Adapter<CustomAvail
     public class CustomAvailableViewHolder extends RecyclerView.ViewHolder{
         private TextView time;
         private TextView day;
-        private TextView slot;
+        private TextView date;
         private CheckBox checkBox;
+        private ImageView imageView;
         public CustomAvailableViewHolder(View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
             day = (TextView) itemView.findViewById(R.id.venu);
-            slot = (TextView) itemView.findViewById(R.id.date);
+            date = (TextView) itemView.findViewById(R.id.date);
             checkBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            imageView=(ImageView)itemView.findViewById(R.id.imageView2);
+            checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    list.get(getAdapterPosition()).setAvailable(isChecked);
+                }
+            });
         }
 
 

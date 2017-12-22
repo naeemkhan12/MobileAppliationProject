@@ -37,19 +37,18 @@ import example.com.ustadiapp.model.Schedule;
 import example.com.ustadiapp.model.User;
 
 public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneralViewAdapter.CustomGeneralViewHolder> {
-
-
-
     private static final String LOG="TESTLOG";
     private Context context;
     private LayoutInflater inflater;
     private ArrayList<Duty> list;
     private FragmentManager manager;
+    private String userId;
 
-    public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager){
+    public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager,String userId){
         this.context=context;
         this.manager=manager;
         this.list=list;
+        this.userId=userId;
         this.inflater= LayoutInflater.from(context);
 
     }
@@ -61,10 +60,17 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
     @Override
     public void onBindViewHolder(CustomGeneralViewHolder holder, int position) {
-        holder.time.setText(list.get(position).getSlot().getStartTime()+" "+list.get(position).getSlot().getEndTime());
-        holder.date.setText(list.get(position).getDate().getDay()+"");
-        holder.venu.setText(list.get(position).getVenu());
-        holder.name.setText(list.get(position).getUser().getUserName());
+
+            holder.time.setText(list.get(position).getSlot().getStartTime()+" "+list.get(position).getSlot().getEndTime());
+            holder.date.setText(list.get(position).getDate().getDay()+"");
+            holder.venu.setText(list.get(position).getVenu());
+            holder.name.setText(list.get(position).getUser().getUserName());
+
+//        visibility checks
+        if (!list.get(position).getUser().getUserId().equals(userId)){
+            holder.imageView.setVisibility(View.GONE);
+        }
+
     }
 
     @Override
@@ -90,6 +96,63 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         }
         return availables;
     }
+    public ListView availablesList(int position){
+        ListView listView = new ListView(context);
+        AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(position),inflater);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+//                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
+            }
+        });
+        return listView;
+    }
+    public long dateToMillis(String dateStr) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date date =sdf.parse(dateStr);
+       return date.getTime();
+    }
+    public void setOnClickListener(View view , final int position){
+        PopupMenu popupMenu=new PopupMenu(context,view);
+        popupMenu.getMenuInflater().inflate(R.menu.radio_menu,popupMenu.getMenu());
+        popupMenu.show();
+        Log.i(LOG,"clicked: "+position);
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.available_radio:
+                        View view = inflater.inflate(R.layout.reason_pop,null);
+                        showDialog(view,"Reason for Unavaiablity");
+//                                    itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.material_lime_a700));
+                        Log.i(LOG,"available radio clicked");
+                        return true;
+                    case R.id.swap_radio:
+                        showDialog(availablesList(position),"Select Person to swap with");
+                        Log.i(LOG,"swap radio clicked");
+                        return true;
+                    case R.id.set_alarm:
+                        Duty duty = list.get(position);
+                        String dateStr = duty.getDate().toString()+" "+duty.getSlot().getStartTime()+":00";
+                        String testStr = "2017/12/20 01:25:00";
+                        Log.i(LOG,"Date: "+dateStr);
+
+                        try {
+                            long timeInMills = dateToMillis(dateStr);
+//                                        new SetAlarm(context).setAlarm(timeInMills);
+                        } catch (ParseException e) {
+                            Log.i(LOG,"parse error");
+                            e.printStackTrace();
+                        }
+//        long timeInMillis = date.getTime();
+                }
+                return false;
+            }
+        });
+
+    }
 
     public class CustomGeneralViewHolder extends RecyclerView.ViewHolder{
         private TextView time;
@@ -103,63 +166,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
             venu = (TextView) itemView.findViewById(R.id.venu);
             date = (TextView) itemView.findViewById(R.id.date);
             name=(TextView)itemView.findViewById(R.id.name);
-             imageView=(ImageView)itemView.findViewById(R.id.launcher);
-            imageView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    PopupMenu popupMenu=new PopupMenu(context,v);
-                    popupMenu.getMenuInflater().inflate(R.menu.radio_menu,popupMenu.getMenu());
-                    popupMenu.show();
-                    Log.i(LOG,"clicked: "+getAdapterPosition());
-                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            switch (item.getItemId()){
-                                case R.id.available_radio:
-                                    View view = inflater.inflate(R.layout.reason_pop,null);
-                                    showDialog(view,"Reason for Unavaiablity");
-//                                    itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.material_lime_a700));
-                                    Log.i(LOG,"available radio clicked");
-                                    return true;
-                                case R.id.swap_radio:
-                                    ListView listView = new ListView(context);
-                                    AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(getAdapterPosition()),inflater);
-                                    listView.setAdapter(adapter);
-                                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                                        @Override
-                                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-//                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
-                                        }
-                                    });
-                                    showDialog(listView,"Select Person to swap with");
-
-                                    Log.i(LOG,"swap radio clicked");
-                                    return true;
-                                case R.id.set_alarm:
-                                    int pos = getAdapterPosition();
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                                    String dateStr = list.get(pos).getDate().toString()+" "+list.get(pos).getSlot().getStartTime()+":00";
-                                    String testStr = "2017/12/20 01:25:00";
-                                    Log.i(LOG,"Date: "+dateStr);
-
-                                    try {
-                                        Date date = sdf.parse(testStr);
-                                        long timeInMills = date.getTime();
-//                                        new SetAlarm(context).setAlarm(timeInMills);
-                                    } catch (ParseException e) {
-                                        Log.i(LOG,"parse error");
-                                        e.printStackTrace();
-                                    }
-//        long timeInMillis = date.getTime();
-                            }
-                            return false;
-                        }
-                    });
-
-                }
-            });
+                imageView=(ImageView)itemView.findViewById(R.id.launcher);
+                imageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        setOnClickListener(v,getAdapterPosition());
+                    }
+                });
         }
 
     }

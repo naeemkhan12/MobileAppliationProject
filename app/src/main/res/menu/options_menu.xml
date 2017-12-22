@@ -4,25 +4,12 @@
 
 
         <item
-        android:id="@+id/action_dropdown0"
+        android:id="@+id/action_update"
         android:icon="@drawable/ic_action_update"
         android:title="@string/text_more_upload"
-        app:showAsAction="always"/><item
-            android:id="@+id/action_dropdown1"
-            android:icon="@drawable/ic_action_user"
-            android:title="@string/text_more_myduty"
-            app:showAsAction="ifRoom"/>
+        app:showAsAction="always"/>
         <item
-            android:id="@+id/action_dropdown2"
-            android:icon="@drawable/ic_action_group"
-            android:title="@string/text_more_allduty"
-            app:showAsAction="ifRoom"/>
-        <item
-            android:id="@+id/action_dropdown3"
-            android:title="@string/text_more_settings"
-            app:showAsAction="never"/>
-        <item
-            android:id="@+id/action_dropdown4"
+            android:id="@+id/action_logout"
             android:title="@string/text_more_logout"
             app:showAsAction="never"/>
 

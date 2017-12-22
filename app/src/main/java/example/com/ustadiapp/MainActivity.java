@@ -6,6 +6,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.view.menu.MenuBuilder;
@@ -19,9 +20,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
@@ -41,6 +46,7 @@ import example.com.ustadiapp.database.FirebaseCRUD;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.GeneralCardModel;
+import example.com.ustadiapp.model.SampleModel;
 import example.com.ustadiapp.model.Schedule;
 import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
@@ -51,17 +57,13 @@ import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
 public class MainActivity extends AppCompatActivity {
     private static final String LOG="TESTLOG";
-    private static final int RC_SIGN_IN = 123;
     private static final String TAG = "TESTLOG";
     private static final String[] DAYS={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     private RecyclerView recyclerView;
     private Context context;
     private String userId;
-    // Choose authentication providers
-    private List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.Builder(AuthUI.EMAIL_PROVIDER).build(),
-            new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build());
-
+    private ArrayList<Duty> duties;
+    private FirebaseCRUD crud;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
 
@@ -72,35 +74,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
         database=FirebaseDatabase.getInstance();
-
-        if (mAuth.getCurrentUser()!=null){
-            Log.i(TAG,"User has id "+mAuth.getCurrentUser().getUid());
-            userId=mAuth.getCurrentUser().getUid();
-//            myRef = database.getReference("schedule/").child(mAuth.getCurrentUser().getUid());
-        }else {
-//            startActivityForResult(
-//                    AuthUI.getInstance()
-//                            .createSignInIntentBuilder()
-//                            .setAvailableProviders(providers)
-//                            .setTheme(R.style.signup_theme)
-//                            .build(),
-//                    RC_SIGN_IN);
-//            userId=mAuth.getCurrentUser().getUid();
-
-        }
-
-        if (getIntent().getBooleanExtra("FLAG",false)){
-            Intent intent = new Intent(this,MarkAvailableActivity.class);
-            startActivity(intent);
-        }
-        FirebaseCRUD crud = new FirebaseCRUD();
+        crud = new FirebaseCRUD();
         crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
-                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,schedule.getList(),getFragmentManager()));
+                duties=schedule.getList();
+                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
             }
 
             @Override
@@ -113,80 +95,51 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        // RC_SIGN_IN is the request code you passed into startActivityForResult(...) when starting the sign in flow.
-//        if (requestCode == RC_SIGN_IN) {
-//            IdpResponse response = IdpResponse.fromResultIntent(data);
-//            // Successfully signed in
-//            if (resultCode == RESULT_OK) {
-////                startActivity(SignedInActivity.createIntent(this, response));
-//                finish();
-//                return;
-//            } else {
-//                // Sign in failed
-//                if (response == null) {
-//                    // User pressed back button
-////                    showSnackbar(R.string.sign_in_cancelled);
-//                    return;
-//                }
-//
-//                if (response.getErrorCode() == ErrorCodes.NO_NETWORK) {
-////                    showSnackbar(R.string.no_internet_connection);
-////                    return;
-//                }
-//
-//                if (response.getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-////                    showSnackbar(R.string.unknown_error);
-////                    return;
-//                }
-//            }
-//
-////            showSnackbar(R.string.unknown_sign_in_response);
-//        }
-//    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater= getMenuInflater();
-        inflater.inflate(R.menu.options_menu,menu);
-
+        inflater.inflate(R.menu.main_menu,menu);
         return true;
 
     }
+    public ArrayList<Duty> singleUserList(){
+        ArrayList<Duty> dutyArrayList = new ArrayList<>();
+        for(Duty duty:duties){
+            if (userId.equals(duty.getUser().getUserId())){
+                dutyArrayList.add(duty);
+            }
+        }
+        return dutyArrayList;
+    }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        Log.i(LOG,"menu item id: "+item.getItemId());
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_user:
+                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,singleUserList(),getFragmentManager(),userId));
+                break;
+            case R.id.action_all:
+                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
+                break;
+            case R.id.action_setting:
+                break;
+            case R.id.action_logout:
+                AuthUI.getInstance().signOut(this)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        public void onComplete(@NonNull Task<Void> task) {
+                            // user is now signed out
+                            startActivity(new Intent(context, LoginActivity.class));
+                            finish();
+                        }
+                    });
+                break;
+        }
+        Log.i(LOG,"menu item id: "+item.getItemId());
+        return super.onOptionsItemSelected(item);
+    }
 }
 
- /* Alert Dialogue for cards */
 
-//    AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
-//// ...Irrelevant code for customizing the buttons and title
-//dialogBuilder.setView(inflater.inflate(R.layout.alert_label_editor, null));
-//        AlertDialog alertDialog = dialogBuilder.create();
-//        LayoutInflater inflater = this.getLayoutInflater();
-//        EditText editText = (EditText) alertDialog.findViewById(R.id.label_field);
-//        editText.setText("test label");
-//        alertDialog.show();
-
-//ic boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        switch (id) {
-//        case R.id.action_dropdown1:
-//        ...
-//        return true;
-//
-//        case R.id.action_dropdown2:
-//        ...
-//        return true;
-//        ...
-//
-//default:
-//        return super.onOptionsItemSelected(item);
-//        }
 
 
 

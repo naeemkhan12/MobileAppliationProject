@@ -38,22 +38,12 @@
     <string name="text_btn_cancel">Cancel</string>
 
 
-
-
-
-
-
-
-
-
-
-
     <dimen name="margin_top">10dp</dimen>
     <dimen name="font_regular">34sp</dimen>
     <dimen name="font_small">20sp</dimen>
     <dimen name="button_padding">10dp</dimen>
 
-<!--alert dialog-->
+    <!--alert dialog-->
     <string name="confirm">OK</string>
     <string name="cancel">Cancel</string>
     <!--availabel my_card view-->
@@ -62,8 +52,6 @@
     <string name="text_subheading_day">Balck Day</string>
     <string name="search_hint">search</string>
     <string name="text_available_at">Venu</string>
-
-
 
 
     <!--material design dimens-->

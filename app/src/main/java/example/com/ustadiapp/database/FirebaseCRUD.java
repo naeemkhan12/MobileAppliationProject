@@ -7,6 +7,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import example.com.ustadiapp.model.SampleModel;
 import example.com.ustadiapp.model.Schedule;
 
 /**
@@ -18,12 +19,12 @@ public  class FirebaseCRUD {
     public FirebaseCRUD(){
 //        databaseInstance.setPersistenceEnabled(true);
     }
-    public void postUserSchedule(String userId, Schedule schedule){
-        DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child(userId);
+    public void postUserSchedule(String userId, SampleModel schedule){
+        DatabaseReference databaseReference= databaseInstance.getReference("schedule/available_user").child(userId);
        databaseReference.setValue(schedule);
     }
     public DatabaseReference getUserRefrence(String userId){
-        return databaseInstance.getReference("schedule/").child(userId);
+        return databaseInstance.getReference("schedule/available_user").child(userId);
     }
     public DatabaseReference getRootRefrence(){
         return databaseInstance.getReference().child("schedule");
@@ -31,7 +32,7 @@ public  class FirebaseCRUD {
     public DatabaseReference getSampleRefrence(){
         return databaseInstance.getReference("schedule/").child("sample");
     }
-    public void postSampleSchedule(Schedule schedule){
+    public void postSampleSchedule(SampleModel schedule){
         DatabaseReference databaseReference= databaseInstance.getReference("schedule/").child("sample");
         databaseReference.setValue(schedule);
     }
