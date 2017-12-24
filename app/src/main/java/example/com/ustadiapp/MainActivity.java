@@ -64,7 +64,7 @@ import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
 //set alarm: https://stackoverflow.com/questions/34517520/how-to-give-notifications-on-android-on-specific-time
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
     private static final String LOG="TESTLOG";
     private static final String TAG = "TESTLOG";
     private static final String[] DAYS={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
@@ -93,7 +93,13 @@ public class MainActivity extends AppCompatActivity {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
                 Log.i(LOG,"Dataset changed");
                 setDuties(schedule.getList());
-                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
+                CustomGeneralViewAdapter adapter = new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId);
+                adapter.setPositionCallback(new CustomGeneralViewAdapter.PositionCallback() {
+                    @Override
+                    public void getPosition(int position) {
+                    }
+                });
+                recyclerView.setAdapter(adapter);
 
 
 
@@ -117,8 +123,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        Log.i(LOG,"On create being called");
-
     }
 
     @Override
@@ -219,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
     public void setDuties(ArrayList<Duty> duties) {
         this.duties = duties;
     }
+
 }
 
 

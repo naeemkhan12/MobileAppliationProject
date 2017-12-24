@@ -31,8 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth=FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser()!=null){
-            SendMessage sendMessage = new SendMessage("naeemr2014@namal.edu.pk","1");
-            sendMessage.execute();
+//            SendMessage sendMessage = new SendMessage("naeemr2014@namal.edu.pk","1");
+//            sendMessage.execute();
             Log.i(TAG,"User has id "+mAuth.getCurrentUser().getUid());
             startActivity();
 //            myRef = database.getReference("schedule/").child(mAuth.getCurrentUser().getUid());

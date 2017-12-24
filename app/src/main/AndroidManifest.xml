@@ -3,7 +3,7 @@
     package="example.com.ustadiapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <!-- <meta-data android:name="com.facebook.sdk.ApplicationId" -->
@@ -24,7 +24,7 @@
     <!-- </activity> -->
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -39,7 +39,7 @@
         <!-- <action android:name="android.intent.action.SEARCH" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-        <activity android:name=".MarkAvailableActivity"></activity>
+        <activity android:name=".MarkAvailableActivity" />
 
         <service android:name=".services.FirebaseMessageService">
             <intent-filter>
@@ -61,9 +61,9 @@
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

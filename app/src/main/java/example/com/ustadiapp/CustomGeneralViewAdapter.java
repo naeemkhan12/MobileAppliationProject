@@ -36,6 +36,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     private ArrayList<Duty> list;
     private FragmentManager manager;
     private String userId;
+    private PositionCallback mCallback;
 
     public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager,String userId){
         this.context=context;
@@ -45,7 +46,9 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         this.inflater= LayoutInflater.from(context);
 
     }
-
+    public void setPositionCallback(PositionCallback mCallback){
+        this.mCallback=mCallback;
+    }
     @Override
     public CustomGeneralViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new CustomGeneralViewHolder(inflater.inflate(R.layout.general_card,parent,false));
@@ -112,7 +115,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         PopupMenu popupMenu=new PopupMenu(context,view);
         popupMenu.getMenuInflater().inflate(R.menu.radio_menu,popupMenu.getMenu());
         popupMenu.show();
-        Log.i(LOG,"clicked: "+position);
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -146,7 +148,12 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
             }
         });
 
+
     }
+    public interface PositionCallback{
+    public void getPosition(int position);
+    }
+
 
     public class CustomGeneralViewHolder extends RecyclerView.ViewHolder{
         private TextView time;
@@ -154,7 +161,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         private TextView venu;
         private TextView name;
         private ImageView imageView;
-        public CustomGeneralViewHolder(final View itemView) {
+        public CustomGeneralViewHolder( View itemView) {
             super(itemView);
             time = (TextView) itemView.findViewById(R.id.time);
             venu = (TextView) itemView.findViewById(R.id.venu);
@@ -167,8 +174,18 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                         setOnClickListener(v,getAdapterPosition());
                     }
                 });
-        }
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(v.getId()!=imageView.getId()){
+                        if (mCallback!=null){
+                            mCallback.getPosition(getAdapterPosition());
+                        }
+                    }
 
+                }
+            });
+        }
     }
 
 }
