@@ -12,11 +12,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import example.com.ustadiapp.model.AvailableListModel;
-public class AvailableListAdapter extends ArrayAdapter<AvailableListModel>{
+public class ListAdapter extends ArrayAdapter<AvailableListModel>{
     private final Context context;
     private final ArrayList<AvailableListModel> values;
     private final LayoutInflater inflater;
-    public AvailableListAdapter(@NonNull Context context, ArrayList<AvailableListModel> values,LayoutInflater inflater) {
+    public ListAdapter(@NonNull Context context, ArrayList<AvailableListModel> values, LayoutInflater inflater) {
         super(context, -1);
         this.context=context;
         this.values=values;

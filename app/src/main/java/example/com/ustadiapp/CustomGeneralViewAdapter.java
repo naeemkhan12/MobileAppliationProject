@@ -6,12 +6,9 @@ package example.com.ustadiapp;
 
 //public class CustomGeneralViewAdapter {
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.FragmentManager;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -30,11 +27,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import example.com.ustadiapp.model.AvailableListModel;
-import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
-import example.com.ustadiapp.model.GeneralCardModel;
-import example.com.ustadiapp.model.Schedule;
-import example.com.ustadiapp.model.User;
 
 public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneralViewAdapter.CustomGeneralViewHolder> {
     private static final String LOG="TESTLOG";
@@ -89,16 +82,17 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     public ArrayList<AvailableListModel> searchAvailables(int position){
         ArrayList<AvailableListModel> availables = new ArrayList<>();
 
-        for (Duty item: list) {
+        for (int i=0;i<list.size();i++) {
+            Duty item = list.get(i);
             if (item.getSlot().getId()!=list.get(position).getSlot().getId()&& !item.getUser().getUserId().equals(list.get(position).getUser().getUserId())){
-                availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId()));
+                availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId(),item.getDate(),i));
             }
         }
         return availables;
     }
     public ListView availablesList(int position){
         ListView listView = new ListView(context);
-        AvailableListAdapter adapter = new AvailableListAdapter(context,searchAvailables(position),inflater);
+        ListAdapter adapter = new ListAdapter(context,searchAvailables(position),inflater);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

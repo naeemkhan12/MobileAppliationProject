@@ -6,9 +6,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
+
+import java.util.ArrayList;
 
 /**
  * Created by naeem on 12/22/17.
@@ -16,14 +19,16 @@ import com.google.firebase.messaging.RemoteMessage;
 
 public class CustomNotification {
     private Context context;
-    private String flag;
-    public CustomNotification(Context context , String flag){
+    private ArrayList<String> flag;
+    public CustomNotification(Context context , ArrayList<String> flag){
         this.context=context;
         this.flag=flag;
     }
     public void sendNotification(String mTitle,String mBody,int icon) {
         Intent intent = new Intent(context, LoginActivity.class);
-        intent.putExtra("FLAG",flag);
+        Bundle bundle = new Bundle();
+        bundle.putStringArrayList("FLAG",flag);
+        intent.putExtras(bundle);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

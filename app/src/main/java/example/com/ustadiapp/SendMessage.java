@@ -21,19 +21,13 @@ public class SendMessage extends AsyncTask<Void, Void,Void>{
     private static final String LOG ="TESTLOG" ;
     private String email;
     private String message;
-    private String toDate;
-    private String withDate;
-    private String toSlot;
-    private String withSlot;
+    private String index;
     private final OkHttpClient client = new OkHttpClient();
 
-    public SendMessage(String email, String toDate, String withDate, String toSlot, String withSlot) {
+    public SendMessage(String email,String index) {
         this.email = email;
-        this.toDate = toDate;
-        this.withDate = withDate;
-        this.toSlot = toSlot;
-        this.withSlot = withSlot;
-        this.message = email+" wants to swap the following duty with you.\n date: "+withDate+" slot: "+withSlot;
+        this.index=index;
+        this.message = email+" wants to swap the following duty with you.";
     }
 
     @Override
@@ -41,10 +35,7 @@ public class SendMessage extends AsyncTask<Void, Void,Void>{
         RequestBody formBody = new FormBody.Builder()
                 .add("email", email)
                 .add("message",message)
-                .add("toDate",toDate)
-                .add("toSlot",toSlot)
-                .add("withDate",withDate)
-                .add("withSlot", withSlot)
+                .add("index",index)
                 .build();
         Request request = new Request.Builder()
                 .url("http://10.0.3.2/push.php")

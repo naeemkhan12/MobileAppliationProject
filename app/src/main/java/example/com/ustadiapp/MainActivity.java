@@ -2,6 +2,7 @@ package example.com.ustadiapp;
 
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +21,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.firebase.ui.auth.AuthUI;
@@ -35,19 +38,25 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import example.com.ustadiapp.database.FirebaseCRUD;
+import example.com.ustadiapp.model.AvailableListModel;
 import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.GeneralCardModel;
 import example.com.ustadiapp.model.SampleModel;
 import example.com.ustadiapp.model.Schedule;
+import example.com.ustadiapp.model.User;
 import example.com.ustadiapp.randomData.RandomDutyGenerator;
 
 
@@ -62,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private Context context;
     private String userId;
-    private ArrayList<Duty> duties;
+    private ArrayList<Duty> duties = new ArrayList<>();
     private FirebaseCRUD crud;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
@@ -73,16 +82,33 @@ public class MainActivity extends AppCompatActivity {
         this.context=this;
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
+        userId=mAuth.getUid();
         database=FirebaseDatabase.getInstance();
         crud = new FirebaseCRUD();
-        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
-                duties=schedule.getList();
+                Log.i(LOG,"Dataset changed");
+                setDuties(schedule.getList());
                 recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
+
+
+
+                Bundle extras= getIntent().getExtras();
+                if (extras!=null){
+                    String index = extras.get("index").toString();
+                    try {
+                        int indexInt = Integer.parseInt(index);
+                        createListPopUp(indexInt);
+                    } catch (ParseException e) {
+                        Log.i(LOG,"parse exception");
+                        e.printStackTrace();
+                    }
+                }
+
             }
 
             @Override
@@ -91,10 +117,57 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-
+        Log.i(LOG,"On create being called");
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public void createListPopUp(final int index) throws ParseException {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        ListView listView = new ListView(this);
+        final ArrayList<AvailableListModel> modelArrayList = new ArrayList<>();
+        Date date1 = dateFormat.parse(getDuties().get(index).getDate().toString());
+        for (int i=0;i<singleUserList().size();i++){
+            Duty item = singleUserList().get(i);
+            Date date2=dateFormat.parse(item.getDate().toString());
+            if (date1.compareTo(date2)<=0){
+                modelArrayList.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId(),item.getDate(),i));
+            }
+
+        }
+        listView.setAdapter(new ListAdapter(this,modelArrayList,getLayoutInflater()));
+        AlertDialog.Builder builder= new AlertDialog.Builder(this);
+        builder.setCancelable(true)
+                .setTitle("swap with ...")
+                .setView(listView)
+                .create()
+                .show();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 int index1= modelArrayList.get(position).getIndex();
+                swapDuty(index1,index);
+                finish();
+            }
+        });
+    }
+    public void swapDuty(int index1, int index){
+        User user = getDuties().get(index).getUser();
+        User user2 = getDuties().get(index1).getUser();
+        getDuties().get(index).setUser(user2);
+        getDuties().get(index1).setUser(user);
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                crud.updateDutyTable(new Schedule(5,duties));
+            }
+        });
+//        thread.start();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater= getMenuInflater();
@@ -104,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
     }
     public ArrayList<Duty> singleUserList(){
         ArrayList<Duty> dutyArrayList = new ArrayList<>();
-        for(Duty duty:duties){
+        Log.i(LOG,""+getDuties().size());
+        for(Duty duty:getDuties()){
             if (userId.equals(duty.getUser().getUserId())){
                 dutyArrayList.add(duty);
             }
@@ -136,6 +210,14 @@ public class MainActivity extends AppCompatActivity {
         }
         Log.i(LOG,"menu item id: "+item.getItemId());
         return super.onOptionsItemSelected(item);
+    }
+
+    public ArrayList<Duty> getDuties() {
+        return duties;
+    }
+
+    public void setDuties(ArrayList<Duty> duties) {
+        this.duties = duties;
     }
 }
 

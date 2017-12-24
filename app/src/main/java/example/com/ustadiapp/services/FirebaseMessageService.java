@@ -12,6 +12,11 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.Map;
+
 import example.com.ustadiapp.CustomNotification;
 import example.com.ustadiapp.LoginActivity;
 import example.com.ustadiapp.MainActivity;
@@ -24,24 +29,36 @@ import example.com.ustadiapp.R;
 
 public class FirebaseMessageService  extends FirebaseMessagingService{
     private static final String LOG = "TESTLOG";
+    private ArrayList<String>  FLAG = new ArrayList<>();
+
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        if (remoteMessage.getNotification().getBody()!=null){
-            Log.i(LOG,"MESSAGE RECEIVED");
-//            sendNotification(remoteMessage);
-            RemoteMessage.Notification notification = remoteMessage.getNotification();
-            CustomNotification customNotification = new CustomNotification(this,"solo");
-            customNotification.sendNotification(notification.getTitle(),notification.getBody(),R.drawable.ic_stat_update);
+        Log.i(LOG,"MESSAGE RECEIVED");
+        String title;
+        String body;
+        int icon;
+        if(remoteMessage.getNotification()!=null){
+            Log.i(LOG,"Upstream Message");
+            title=remoteMessage.getNotification().getTitle();
+            body=remoteMessage.getNotification().getBody();
+            icon = R.drawable.ic_stat_update;
+            FLAG.add("upstream");
+        }else {
+            Log.i(LOG,"Upstream to Device Message");
+            Map<String, String> params = remoteMessage.getData();
+            title = params.get("title");
+            body = params.get("body");
+//            JSONObject object = new JSONObject(params);
+//            Log.e(LOG, object.toString());
+            icon = R.drawable.ic_stat_swap;
+            FLAG.add("device");
+            FLAG.add(params.get("index"));
         }
-    }
-
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        Log.i(LOG,"SERVICE STARTED");
-    }
-
+            RemoteMessage.Notification notification = remoteMessage.getNotification();
+            CustomNotification customNotification = new CustomNotification(this,FLAG);
+            customNotification.sendNotification(title,body,icon);
+        }
 
 }

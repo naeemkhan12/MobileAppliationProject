@@ -12,6 +12,7 @@ import com.firebase.ui.auth.ErrorCodes;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth=FirebaseAuth.getInstance();
         if (mAuth.getCurrentUser()!=null){
+            SendMessage sendMessage = new SendMessage("naeemr2014@namal.edu.pk","1");
+            sendMessage.execute();
             Log.i(TAG,"User has id "+mAuth.getCurrentUser().getUid());
             startActivity();
 //            myRef = database.getReference("schedule/").child(mAuth.getCurrentUser().getUid());
@@ -52,6 +55,8 @@ public class LoginActivity extends AppCompatActivity {
         if (requestCode == RC_SIGN_IN) {
             // Successfully signed in
             if (resultCode == RESULT_OK) {
+//                Intent intent = new Intent(this,MainActivity.class);
+//                startActivity(intent);
                 startActivity();
                 return;
             } else {
@@ -65,9 +70,18 @@ public class LoginActivity extends AppCompatActivity {
 
     public void startActivity(){
         Intent intent;
-        if (getIntent().getBooleanExtra("FLAG",false)){
-            intent = new Intent(this,MarkAvailableActivity.class);
-        }else {
+        Bundle extras = getIntent().getExtras();
+        if (extras!=null){
+            Log.i(TAG,"checking activity");
+            ArrayList<String> stringArrayList = extras.getStringArrayList("FLAG");
+            if (stringArrayList.get(0).equals("device")){
+                intent = new Intent(this,MainActivity.class);
+                intent.putExtra("index",stringArrayList.get(1));
+            }else {
+                intent = new Intent(this,MarkAvailableActivity.class);
+            }
+        }
+        else {
             intent = new Intent(this,MainActivity.class);
         }
         startActivity(intent);
