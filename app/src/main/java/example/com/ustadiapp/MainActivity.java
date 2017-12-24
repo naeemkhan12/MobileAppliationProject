@@ -35,6 +35,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
+import com.google.gson.internal.Streams;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -52,6 +53,7 @@ import java.util.List;
 import example.com.ustadiapp.database.FirebaseCRUD;
 import example.com.ustadiapp.model.AvailableListModel;
 import example.com.ustadiapp.model.Day;
+import example.com.ustadiapp.model.Detail;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.GeneralCardModel;
 import example.com.ustadiapp.model.SampleModel;
@@ -97,7 +99,20 @@ public class MainActivity extends AppCompatActivity{
                 adapter.setPositionCallback(new CustomGeneralViewAdapter.PositionCallback() {
                     @Override
                     public void getPosition(int position) {
+                        Intent intent = new Intent(context, DetailActivity.class);
+                        ArrayList<String> paramsList = new ArrayList<String>();
+                        paramsList.add(getDuties().get(position).getUser().getUserName());
+                        paramsList.add(getDuties().get(position).getUser().getEmail());
+                        paramsList.add(getDuties().get(position).getSubject());
+                        paramsList.add(getDuties().get(position).getVenu());
+                        paramsList.add(getDuties().get(position).getSlot().getStartTime()+" "+getDuties().get(position).getSlot().getEndTime());
+                        paramsList.add(getDuties().get(position).getDate().toString());
+                        Bundle bundle = new Bundle();
+                        bundle.putStringArrayList("Detail",paramsList);
+                        intent.putExtras(bundle);
+                        startActivity(intent);
                     }
+
                 });
                 recyclerView.setAdapter(adapter);
 

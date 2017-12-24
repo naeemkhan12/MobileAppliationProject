@@ -46,12 +46,5 @@ public class Detail{
     }
 
 
-    public Detail (Parcel in){
-        this.heading = in.readString();
-        this.value = in.readString();
-        this.icon = in.readInt();
-    }
-
-
 
     }
