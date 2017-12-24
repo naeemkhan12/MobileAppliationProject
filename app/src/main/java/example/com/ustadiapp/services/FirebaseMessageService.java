@@ -51,7 +51,7 @@ public class FirebaseMessageService  extends FirebaseMessagingService{
             title = params.get("title");
             body = params.get("body");
 //            JSONObject object = new JSONObject(params);
-//            Log.e(LOG, object.toString());
+//            LogModel.e(LOG, object.toString());
             icon = R.drawable.ic_stat_swap;
             FLAG.add("device");
             FLAG.add(params.get("index"));

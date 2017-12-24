@@ -56,6 +56,7 @@ import example.com.ustadiapp.model.Day;
 import example.com.ustadiapp.model.Detail;
 import example.com.ustadiapp.model.Duty;
 import example.com.ustadiapp.model.GeneralCardModel;
+import example.com.ustadiapp.model.LogModel;
 import example.com.ustadiapp.model.SampleModel;
 import example.com.ustadiapp.model.Schedule;
 import example.com.ustadiapp.model.User;
@@ -98,19 +99,28 @@ public class MainActivity extends AppCompatActivity{
                 CustomGeneralViewAdapter adapter = new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId);
                 adapter.setPositionCallback(new CustomGeneralViewAdapter.PositionCallback() {
                     @Override
-                    public void getPosition(int position) {
-                        Intent intent = new Intent(context, DetailActivity.class);
-                        ArrayList<String> paramsList = new ArrayList<String>();
-                        paramsList.add(getDuties().get(position).getUser().getUserName());
-                        paramsList.add(getDuties().get(position).getUser().getEmail());
-                        paramsList.add(getDuties().get(position).getSubject());
-                        paramsList.add(getDuties().get(position).getVenu());
-                        paramsList.add(getDuties().get(position).getSlot().getStartTime()+" "+getDuties().get(position).getSlot().getEndTime());
-                        paramsList.add(getDuties().get(position).getDate().toString());
-                        Bundle bundle = new Bundle();
-                        bundle.putStringArrayList("Detail",paramsList);
-                        intent.putExtras(bundle);
-                        startActivity(intent);
+                    public void getPosition(int position, String flag) {
+                        if (flag!=null){
+                            duties.get(position).getUser().setAvailable(false);
+                            crud.updateDuty(position,duties.get(position));
+                            User user = duties.get(position).getUser();
+                            LogModel log = new LogModel();
+                            crud.insertLog(userId,log);
+
+                        }else {
+                            Intent intent = new Intent(context, DetailActivity.class);
+                            ArrayList<String> paramsList = new ArrayList<String>();
+                            paramsList.add(getDuties().get(position).getUser().getUserName());
+                            paramsList.add(getDuties().get(position).getUser().getEmail());
+                            paramsList.add(getDuties().get(position).getSubject());
+                            paramsList.add(getDuties().get(position).getVenu());
+                            paramsList.add(getDuties().get(position).getSlot().getStartTime() + " " + getDuties().get(position).getSlot().getEndTime());
+                            paramsList.add(getDuties().get(position).getDate().toString());
+                            Bundle bundle = new Bundle();
+                            bundle.putStringArrayList("Detail", paramsList);
+                            intent.putExtras(bundle);
+                            startActivity(intent);
+                        }
                     }
 
                 });

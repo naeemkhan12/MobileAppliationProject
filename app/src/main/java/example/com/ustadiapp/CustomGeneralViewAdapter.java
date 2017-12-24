@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -74,13 +75,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         return list.size();
     }
 
-    public void showDialog(View listView,String title){
+    public AlertDialog showDialog(View listView,String title){
         AlertDialog.Builder builder= new AlertDialog.Builder(context);
         builder.setCancelable(true)
                 .setTitle(title)
                 .setView(listView).
-                create().
-                show();
+                create();
+        return builder.show();
     }
     public ArrayList<AvailableListModel> searchAvailables(int position){
         ArrayList<AvailableListModel> availables = new ArrayList<>();
@@ -101,7 +102,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                                            Log.i(LOG,"userId: "+values.get(position).getUserId());
+//                                            LogModel.i(LOG,"userId: "+values.get(position).getUserId());
             }
         });
         return listView;
@@ -121,9 +122,26 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                 switch (item.getItemId()){
                     case R.id.available_radio:
                         View view = inflater.inflate(R.layout.reason_pop,null);
-                        showDialog(view,"Reason for Unavaiablity");
-//                                    itemView.setBackgroundColor(ContextCompat.getColor(context,R.color.material_lime_a700));
-                        Log.i(LOG,"available radio clicked");
+                        Button ok = (Button)view.findViewById(R.id.ok);
+                        Button cancel = (Button)view.findViewById(R.id.cancel);
+                        final TextView message = (TextView) view.findViewById(R.id.reason);
+                        final AlertDialog dialog = showDialog(view,"Reason for Unavaiablity");
+                        ok.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Log.i(LOG,"Message: "+message.getText());
+                                dialog.dismiss();
+                                if (mCallback!=null){
+                                    mCallback.getPosition(position,message.getText().toString());
+                                }
+                            }
+                        });
+                        cancel.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialog.dismiss();
+                            }
+                        });
                         return true;
                     case R.id.swap_radio:
                         showDialog(availablesList(position),"Select Person to swap with");
@@ -142,7 +160,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                             Log.i(LOG,"parse error");
                             e.printStackTrace();
                         }
-//        long timeInMillis = date.getTime();
                 }
                 return false;
             }
@@ -150,8 +167,9 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
 
     }
+//    return position to main activity
     public interface PositionCallback{
-    public void getPosition(int position);
+    public void getPosition(int position,String flag);
     }
 
 
@@ -179,7 +197,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                 public void onClick(View v) {
                     if(v.getId()!=imageView.getId()){
                         if (mCallback!=null){
-                            mCallback.getPosition(getAdapterPosition());
+                            mCallback.getPosition(getAdapterPosition(),null);
                         }
                     }
 

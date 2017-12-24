@@ -1,5 +1,7 @@
 package example.com.ustadiapp.database;
 
+import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -7,6 +9,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import example.com.ustadiapp.model.Duty;
+import example.com.ustadiapp.model.LogModel;
 import example.com.ustadiapp.model.SampleModel;
 import example.com.ustadiapp.model.Schedule;
 
@@ -43,6 +47,15 @@ public  class FirebaseCRUD {
     }
     public DatabaseReference dutyTableRefrence(){
         return databaseInstance.getReference("schedule/").child("dutyTable");
+    }
+    public void updateDuty(int position, Duty value){
+        DatabaseReference databaseReference= databaseInstance.getReference("schedule/dutyTable/list").child(""+position);
+        databaseReference.setValue(value);
+    }
+    public void insertLog(String userid, LogModel log){
+        DatabaseReference databaseReference= databaseInstance.getReference("schedule/logs/").child(userid);
+        databaseReference.setValue(log);
+
     }
 
 //    httpPost = new HttpPost("http://xxx.xxx.xxx.xx/user/login.json");
