@@ -38,8 +38,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     private FragmentManager manager;
     private String userId;
     private PositionCallback mCallback;
-
-    public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager,String userId){
+    public CustomGeneralViewAdapter(Context context, ArrayList<Duty> list, FragmentManager manager, String userId){
         this.context=context;
         this.manager=manager;
         this.list=list;
@@ -57,15 +56,16 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
     @Override
     public void onBindViewHolder(CustomGeneralViewHolder holder, int position) {
-
             holder.time.setText(list.get(position).getSlot().getStartTime()+" "+list.get(position).getSlot().getEndTime());
             holder.date.setText(list.get(position).getDate().getDay()+"");
             holder.venu.setText(list.get(position).getVenu());
             holder.name.setText(list.get(position).getUser().getUserName());
 
-//        visibility checks
+////        visibility checks
         if (!list.get(position).getUser().getUserId().equals(userId)){
-            holder.imageView.setVisibility(View.GONE);
+            holder.imageView.setVisibility(View.INVISIBLE);
+        }else {
+            holder.imageView.setVisibility(View.VISIBLE);
         }
 
     }
@@ -85,7 +85,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
     }
     public ArrayList<AvailableListModel> searchAvailables(int position){
         ArrayList<AvailableListModel> availables = new ArrayList<>();
-
         for (int i=0;i<list.size();i++) {
             String userId = list.get(position).getUser().getUserId();
             int slotId = list.get(position).getSlot().getId();
@@ -94,20 +93,51 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                 availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId(),item.getDate(),i));
             }
         }
+        Log.i(LOG,"length: "+availables.size());
         return availables;
     }
-    public ListView availablesList(int position){
+    public void showAvailables(int position){
         ListView listView = new ListView(context);
-        ListAdapter adapter = new ListAdapter(context,searchAvailables(position),inflater);
+        final ArrayList<AvailableListModel> availables = searchAvailables(position);
+        ListAdapter adapter = new ListAdapter(context,availables,inflater);
         listView.setAdapter(adapter);
+        final AlertDialog dialog = showDialog(listView,"ListView");
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                dialog.dismiss();
+               int index = availables.get(position).getIndex();
+                //send the alert notification to the user
+                SendMessage sendMessage = new SendMessage(list.get(index).getUser().getEmail(),index+"");
+                sendMessage.execute();
 //                                            LogModel.i(LOG,"userId: "+values.get(position).getUserId());
             }
         });
-        return listView;
+
+    }
+    public void enterMessageDialog(final int position){
+        View view = inflater.inflate(R.layout.reason_pop,null);
+        Button ok = (Button)view.findViewById(R.id.ok);
+        Button cancel = (Button)view.findViewById(R.id.cancel);
+        final TextView message = (TextView) view.findViewById(R.id.reason);
+        final AlertDialog dialog = showDialog(view,"Reason for Unavaiablity");
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(LOG,"Message: "+message.getText());
+                dialog.dismiss();
+                if (mCallback!=null){
+                    mCallback.getPosition(position,message.getText().toString());
+                }
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
     public long dateToMillis(String dateStr) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -123,31 +153,10 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.available_radio:
-                        View view = inflater.inflate(R.layout.reason_pop,null);
-                        Button ok = (Button)view.findViewById(R.id.ok);
-                        Button cancel = (Button)view.findViewById(R.id.cancel);
-                        final TextView message = (TextView) view.findViewById(R.id.reason);
-                        final AlertDialog dialog = showDialog(view,"Reason for Unavaiablity");
-                        ok.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Log.i(LOG,"Message: "+message.getText());
-                                dialog.dismiss();
-                                if (mCallback!=null){
-                                    mCallback.getPosition(position,message.getText().toString());
-                                }
-                            }
-                        });
-                        cancel.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                dialog.dismiss();
-                            }
-                        });
+                        enterMessageDialog(position);
                         return true;
                     case R.id.swap_radio:
-                        showDialog(availablesList(position),"Select Person to swap with");
-                        Log.i(LOG,"swap radio clicked");
+                        showAvailables(position);
                         return true;
                     case R.id.set_alarm:
                         Duty duty = list.get(position);
@@ -169,6 +178,14 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
 
     }
+
+    public ArrayList<Duty> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Duty> list) {
+        this.list = list;
+    }
 //    return position to main activity
     public interface PositionCallback{
     public void getPosition(int position,String flag);
@@ -187,13 +204,13 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
             venu = (TextView) itemView.findViewById(R.id.venu);
             date = (TextView) itemView.findViewById(R.id.date);
             name=(TextView)itemView.findViewById(R.id.name);
-                imageView=(ImageView)itemView.findViewById(R.id.launcher);
+            imageView=(ImageView)itemView.findViewById(R.id.launcher);
                 imageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        setOnClickListener(v,getAdapterPosition());
-                    }
-                });
+                        @Override
+                        public void onClick(View v) {
+                            setOnClickListener(v,getAdapterPosition());
+                        }
+                    });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

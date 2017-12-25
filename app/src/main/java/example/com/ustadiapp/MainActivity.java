@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String LOG="TESTLOG";
     private static final String TAG = "TESTLOG";
     private static final String[] DAYS={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
+    private static final String PREFS_NAME = "TOKEN_SERVICE";
     private RecyclerView recyclerView;
     private Context context;
     private String userId;
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity{
     private FirebaseCRUD crud;
     private FirebaseAuth mAuth;
     private FirebaseDatabase database;
+    CustomGeneralViewAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +91,28 @@ public class MainActivity extends AppCompatActivity{
         userId=mAuth.getUid();
         database=FirebaseDatabase.getInstance();
         crud = new FirebaseCRUD();
-        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        /*
+        *
+        * random duty generator to be called
+        *
+        * */
+
+//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        if (settings.getString("email","").equals("")){
+            String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
+            String token = settings.getString("token","");
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putString("email",email);
+            editor.commit();
+            Log.i(LOG,"email: "+email+" token: "+token);
+                SendtoServer server =new SendtoServer(email,token);
+                server.start();
+        }
+
+
+
+
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
@@ -96,11 +120,12 @@ public class MainActivity extends AppCompatActivity{
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
                 Log.i(LOG,"Dataset changed");
                 setDuties(schedule.getList());
-                CustomGeneralViewAdapter adapter = new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId);
+                adapter = new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId);
                 adapter.setPositionCallback(new CustomGeneralViewAdapter.PositionCallback() {
                     @Override
                     public void getPosition(int position, String flag) {
                         if (flag!=null){
+                            Log.i(LOG,"Inside logs");
                             duties.get(position).getUser().setAvailable(false);
                             crud.updateDuty(position,duties.get(position));
                             User user = duties.get(position).getUser();
@@ -219,10 +244,20 @@ public class MainActivity extends AppCompatActivity{
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_user:
-                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,singleUserList(),getFragmentManager(),userId));
+                if (adapter!=null){
+                    adapter.setList(singleUserList());
+                    adapter.notifyDataSetChanged();
+                    Log.i(LOG,"Notify Dataset Changed");
+                }
+//                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,singleUserList(),getFragmentManager(),userId));
                 break;
             case R.id.action_all:
-                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
+                if (adapter!=null){
+                    adapter.setList(getDuties());
+                    adapter.notifyDataSetChanged();
+                    Log.i(LOG,"Notify Dataset Changed");
+                }
+//                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
                 break;
             case R.id.action_setting:
                 Intent intent = new Intent(this,SettingActivity.class);
