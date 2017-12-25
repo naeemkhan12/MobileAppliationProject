@@ -6,71 +6,62 @@ package example.com.ustadiapp.model;
 
 public class Duty {
     private String venu;
-    private int slotNumber;
+    private Slot slot;
     private String subject;
-    private String startTime;
-    private String endTime;
-    private boolean isAvailable;
-
-    public Duty(String venu, int slotNumber, String subject, String startTime, String endTime, boolean isAvailable) {
-        this.venu = venu;
-        this.slotNumber = slotNumber;
-        this.subject = subject;
-        this.startTime=startTime;
-        this.endTime=endTime;
-        this.isAvailable=isAvailable;
-    }
-
-    public boolean isAvailable() {
-        return isAvailable;
-    }
-
-    public void setAvailable(boolean available) {
-        isAvailable = available;
-    }
+    private User user;
+    private Date date;
+    private String day;
 
     public Duty() {
     }
 
-    public String getStartTime() {
-        return startTime;
+    public Duty(String venu, Slot slot, String subject, User user, Date date, String day) {
+        this.venu = venu;
+        this.slot = slot;
+        this.subject = subject;
+        this.user = user;
+        this.date = date;
+        this.day = day;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public Date getDate() {
+        return date;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public String getDay() {
+        return day;
     }
 
+    public void setDay(String day) {
+        this.day = day;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+    public void setSlot(Slot slot) {
+        this.slot = slot;
+    }
+    public User getUser() {
+        return user;
+    }
+    public void setUser(User user) {
+        this.user = user;
+    }
     public String getVenu() {
         return venu;
     }
-
     public void setVenu(String venu) {
         this.venu = venu;
     }
-
-    public int getSlotNumber() {
-        return slotNumber;
-    }
-
-    public void setSlotNumber(int slotNumber) {
-        this.slotNumber = slotNumber;
-    }
-
     public String getSubject() {
         return subject;
     }
-
     public void setSubject(String subject) {
         this.subject = subject;
     }
-
-
 }

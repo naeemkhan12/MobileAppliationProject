@@ -7,32 +7,14 @@ import java.util.ArrayList;
  */
 
 public class Schedule {
-    private String date;
     private int slots;
-    private ArrayList<Day> list;
-
-    public Schedule(String date, ArrayList<Day> list, int slots) {
-        this.date = date;
-        this.list = list;
-        this.slots=slots;
-    }
+    private ArrayList<Duty>list;
 
     public Schedule() {
     }
 
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public ArrayList<Day> getList() {
-        return list;
-    }
-
-    public void setList(ArrayList<Day> list) {
+    public Schedule(int slots, ArrayList<Duty> list) {
+        this.slots = slots;
         this.list = list;
     }
 
@@ -44,8 +26,11 @@ public class Schedule {
         this.slots = slots;
     }
 
-    @Override
-    public String toString(){
-        return "Finally ....DAz DAz DAz";
+    public ArrayList<Duty> getList() {
+        return list;
+    }
+
+    public void setList(ArrayList<Duty> list) {
+        this.list = list;
     }
 }
