@@ -87,8 +87,10 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
         ArrayList<AvailableListModel> availables = new ArrayList<>();
 
         for (int i=0;i<list.size();i++) {
+            String userId = list.get(position).getUser().getUserId();
+            int slotId = list.get(position).getSlot().getId();
             Duty item = list.get(i);
-            if (item.getSlot().getId()!=list.get(position).getSlot().getId()&& !item.getUser().getUserId().equals(list.get(position).getUser().getUserId())){
+            if (!item.getUser().getUserId().equals(userId) && item.getSlot().getId()!=slotId){
                 availables.add(new AvailableListModel(item.getUser(),item.getVenu(),item.getSlot().getId(),item.getDate(),i));
             }
         }
