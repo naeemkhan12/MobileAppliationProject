@@ -42,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                             .createSignInIntentBuilder()
                             .setAvailableProviders(providers)
                             .setTheme(R.style.signup_theme)
+                            .setLogo(R.drawable.ic_account_circle_white_48dp)
                             .build(),
                     RC_SIGN_IN);
         }

@@ -20,22 +20,25 @@ import example.com.ustadiapp.model.User;
  */
 
 public class RandomDutyGenerator {
-    User[] users = {new User("X6g0wikHVASspueiFUoBLZct5t03","Atif Aslam","someone@example.com",true),new User("X6g0wikHVASspueiFUoBLZct5t03","Ahmed Jhanzed","someone@example.com",true),new User("jCpxldgig4cfTWHeMKtZUlqG5GA2","Jawad Ahmed","someone@example.com",true)};
-    Slot[] slots= {new Slot(1,"9:00","10:15"),new Slot(2,"10:30","11:45"),new Slot(3,"12:00","1:15"),new Slot(4,"2:15","3:30"),new Slot(5,"3:45","5:00")};
+    User[] users = {new User("X6g0wikHVASspueiFUoBLZct5t03","Namal User","naeemr2014@namal.edu.pk",true),new User("qqKz3v39ocZ38OS5uIrp6f1gyvs2","Bradford User","naeemb7070@gmail.com",true)};
+    Slot[] slots= {new Slot(1,"9:00","10:15"),new Slot(2,"10:30","11:45"),new Slot(3,"12:00","13:15"),new Slot(4,"14:15","15:30"),new Slot(5,"15:45","16:00")};
     String[] subjects = {"Physics","Math","Chem","Bio","SD"};
-    String[] venus ={"Lab1","Lab2","LH1","LH2","LH3"};
+    String[] venus ={"Lab-1","Lab-2","LH-1","LH-2","LH-3"};
     String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
-    Date[] dates = {new Date("01","01","2011"),new Date("02","01","2011"),new Date("03","01","2011"),new Date("04","01","2011"),new Date("05","01","2011")};
+    Date[] dates = {new Date("21","01","2018"),new Date("22","01","2018"),new Date("23","01","2018"),new Date("24","01","2018"),new Date("25","01","2018")};
 
     public Schedule getRandomSchedule(){
         ArrayList<Duty> duties = new ArrayList<>();
         for (int i=0;i<5;i++){
             double random= Math.random()*5;
-            double randUser = Math.random()*3;
+            double randUser = Math.random()*2;
             int randInt = (int) random;
             int randUserint = (int) randUser;
-            duties.add(new Duty(venus[randInt],slots[randInt],subjects[randInt],users[randUserint],dates[randInt],days[randInt]));
-            Log.i("TESTLOG",randInt+"");
+            for(int j=0; j<dates.length;j++){
+                duties.add(new Duty(venus[randInt],slots[randInt],subjects[randInt],users[randUserint],dates[i],days[i]));
+                Log.i("TESTLOG",randInt+"");
+            }
+
         }
         return new Schedule(5,duties);
     }

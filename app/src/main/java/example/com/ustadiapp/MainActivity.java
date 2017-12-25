@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity{
         userId=mAuth.getUid();
         database=FirebaseDatabase.getInstance();
         crud = new FirebaseCRUD();
-//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
             @Override
