@@ -74,6 +74,9 @@
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="text_settings_alarm">Reminder Status</string>
+    <string name="text_settings_toggle">On</string>
+
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>

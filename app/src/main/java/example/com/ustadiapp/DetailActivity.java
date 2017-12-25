@@ -2,12 +2,16 @@ package example.com.ustadiapp;
 
 import android.media.Image;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -32,10 +36,13 @@ public class DetailActivity extends AppCompatActivity{
             R.drawable.ic_action_time,R.drawable.ic_action_date,
             };
     private String[] heading={"Name","Email","Subject","Venu","Time Duration","Date"};
+
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         recyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
         Bundle extras = getIntent().getExtras();
         if (extras!=null){
@@ -47,10 +54,20 @@ public class DetailActivity extends AppCompatActivity{
             }
             recyclerView.setAdapter(new DetailHolder(detailArrayList,getLayoutInflater()));
             recyclerView.setLayoutManager(new GridLayoutManager(this,2));
+    }else {
+            finish();
         }
 
-
-
+    }
+    //    https://developer.android.com/training/implementing-navigation/ancestral.html
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return (super.onOptionsItemSelected(menuItem));
     }
 
     public class DetailHolder extends RecyclerView.Adapter<DetailHolder.DetailView>{

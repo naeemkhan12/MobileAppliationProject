@@ -225,6 +225,8 @@ public class MainActivity extends AppCompatActivity{
                 recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
                 break;
             case R.id.action_setting:
+                Intent intent = new Intent(this,SettingActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_logout:
                 AuthUI.getInstance().signOut(this)
