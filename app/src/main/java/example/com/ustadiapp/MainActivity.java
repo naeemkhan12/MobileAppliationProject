@@ -26,6 +26,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -115,12 +116,19 @@ public class MainActivity extends AppCompatActivity{
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         crud.dutyTableRefrence().addValueEventListener(new ValueEventListener() {
+//            https://github.com/afollestad/material-dialogs
+            MaterialDialog prgressDialog = new MaterialDialog.Builder(context)
+                    .title(R.string.progress_dialog)
+                    .content(R.string.please_wait)
+                    .progress(true, 0)
+                    .show();
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Schedule schedule = dataSnapshot.getValue(Schedule.class);
                 Log.i(LOG,"Dataset changed");
                 setDuties(schedule.getList());
                 adapter = new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId);
+                prgressDialog.dismiss();
                 adapter.setPositionCallback(new CustomGeneralViewAdapter.PositionCallback() {
                     @Override
                     public void getPosition(int position, String flag) {
