@@ -19,6 +19,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -26,6 +27,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2.2') {
+        exclude module: 'support-annotations'
+        exclude module: 'support-v4'
+        exclude module: 'design'
+        exclude module: 'recyclerview-v7'
+    }
     //firebase UI auth
     // Required only if Facebook login support is required
     // Required only if Twitter login support is required
@@ -44,6 +51,7 @@ dependencies {
     compile 'com.android.support:support-vector-drawable:26.+'
     compile 'com.afollestad.material-dialogs:core:0.9.6.0'
     testCompile 'junit:junit:4.12'
+
 }
 
 

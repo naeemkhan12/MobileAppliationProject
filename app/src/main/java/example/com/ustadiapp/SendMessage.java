@@ -58,6 +58,5 @@ public class SendMessage extends AsyncTask<Void, Void,Void>{
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        Log.i(LOG,"Sucessful");
     }
 }

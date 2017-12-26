@@ -166,7 +166,7 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
 
                         try {
                             long timeInMills = dateToMillis(dateStr);
-//                                        new SetAlarm(context).setAlarm(timeInMills);
+//                                        new SetReminder(context).setAlarm(timeInMills);
                         } catch (ParseException e) {
                             Log.i(LOG,"parse error");
                             e.printStackTrace();

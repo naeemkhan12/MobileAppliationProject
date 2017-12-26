@@ -9,9 +9,9 @@ import android.content.Intent;
  * Created by naeem on 12/20/17.
  */
 
-public class SetAlarm {
+public class SetReminder {
     private Context context;
-    public SetAlarm(Context context){
+    public SetReminder(Context context){
         this.context=context;
 
     }
