@@ -36,7 +36,11 @@
     <!--reason buttons -->
     <string name="text_btn_ok">Submit</string>
     <string name="text_btn_cancel">Cancel</string>
-
+    <!--login related-->
+    <string name="text_input_email">Email</string>
+    <string name="text_input_pass">Password</string>
+    <string name="text_btn_login">LOGIN</string>
+    <string name="text_btn_signup">No account yet? Create one</string>
 
     <dimen name="margin_top">10dp</dimen>
     <dimen name="font_regular">34sp</dimen>

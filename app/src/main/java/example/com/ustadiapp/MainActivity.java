@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity{
     private static final String TAG = "TESTLOG";
     private static final String[] DAYS={"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
     private static final String PREFS_NAME = "TOKEN_SERVICE";
+    private static final String PREFS_SETTING = "SETTING";
     private RecyclerView recyclerView;
     private Context context;
     private String userId;
@@ -159,6 +160,21 @@ public class MainActivity extends AppCompatActivity{
                 });
                 recyclerView.setAdapter(adapter);
 
+
+//                set reminder over here
+
+                try {
+                    ArrayList<Duty>list =  singleUserList();
+                    String date = list.get(0).getDate().toString();
+                    String time = list.get(0).getSlot().getStartTime();
+                    Log.i(LOG,"DAte: "+date+" "+time);
+                    long millis = adapter.dateToMillis(date+" "+time);
+                    checkReminder(millis);
+//                    checkReminder(adapter.dateToMillis("2017/12/26 03:52:00"));
+                } catch (ParseException e) {
+                    Log.i(LOG,"Parse Exception.");
+                    e.printStackTrace();
+                }
 
 
                 Bundle extras= getIntent().getExtras();
@@ -257,7 +273,6 @@ public class MainActivity extends AppCompatActivity{
                     adapter.notifyDataSetChanged();
                     Log.i(LOG,"Notify Dataset Changed");
                 }
-//                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,singleUserList(),getFragmentManager(),userId));
                 break;
             case R.id.action_all:
                 if (adapter!=null){
@@ -265,7 +280,6 @@ public class MainActivity extends AppCompatActivity{
                     adapter.notifyDataSetChanged();
                     Log.i(LOG,"Notify Dataset Changed");
                 }
-//                recyclerView.setAdapter(new CustomGeneralViewAdapter(context,duties,getFragmentManager(),userId));
                 break;
             case R.id.action_setting:
                 Intent intent = new Intent(this,SettingActivity.class);
@@ -292,6 +306,33 @@ public class MainActivity extends AppCompatActivity{
 
     public void setDuties(ArrayList<Duty> duties) {
         this.duties = duties;
+    }
+
+    public void checkReminder(long millis){
+        SharedPreferences preferences = getSharedPreferences(PREFS_SETTING,MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        SetReminder reminder = new SetReminder(context);
+        if (preferences.getBoolean("remind",true)){
+            Log.i(LOG,"current: "+System.currentTimeMillis()+" Passed: "+millis);
+            if(System.currentTimeMillis()<millis){
+                if (preferences.getLong("millis",0)==0){
+                    editor.putLong("millis",millis);
+                    editor.commit();
+                    reminder.setAlarm(millis);
+                    Log.i(LOG,"Reminder: Replace default value ");
+                }else{
+                    if (preferences.getLong("millis",0)!=millis){
+                        editor.putLong("millis",millis);
+                        editor.commit();
+                        reminder.setAlarm(millis);
+                        Log.i(LOG,"Reminder: New Reminder Added ");
+                    }
+                }
+            }else {
+                Log.i(LOG,"Reminder: history won't repeat itself :) ");
+            }
+        }
+
     }
 
 }
