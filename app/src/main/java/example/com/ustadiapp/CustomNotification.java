@@ -24,6 +24,9 @@ public class CustomNotification {
         this.context=context;
         this.flag=flag;
     }
+    public CustomNotification(Context context){
+        this.context=context;
+    }
     public void sendNotification(String mTitle,String mBody,int icon) {
         Intent intent = new Intent(context, LoginActivity.class);
         Bundle bundle = new Bundle();

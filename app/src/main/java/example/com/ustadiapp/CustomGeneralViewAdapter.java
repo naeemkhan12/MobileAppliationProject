@@ -137,7 +137,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                 dialog.dismiss();
             }
         });
-
     }
     public long dateToMillis(String dateStr) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -158,19 +157,6 @@ public class CustomGeneralViewAdapter extends RecyclerView.Adapter<CustomGeneral
                     case R.id.swap_radio:
                         showAvailables(position);
                         return true;
-                    case R.id.set_alarm:
-                        Duty duty = list.get(position);
-                        String dateStr = duty.getDate().toString()+" "+duty.getSlot().getStartTime()+":00";
-                        String testStr = "2017/12/20 01:25:00";
-                        Log.i(LOG,"Date: "+dateStr);
-
-                        try {
-                            long timeInMills = dateToMillis(dateStr);
-//                                        new SetReminder(context).setAlarm(timeInMills);
-                        } catch (ParseException e) {
-                            Log.i(LOG,"parse error");
-                            e.printStackTrace();
-                        }
                 }
                 return false;
             }
