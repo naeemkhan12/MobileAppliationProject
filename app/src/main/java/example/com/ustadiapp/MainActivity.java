@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity{
         *
         * */
 
-//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (settings.getString("email","").equals("")){
             String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();
@@ -165,11 +165,13 @@ public class MainActivity extends AppCompatActivity{
 
                 try {
                     ArrayList<Duty>list =  singleUserList();
-                    String date = list.get(0).getDate().toString();
-                    String time = list.get(0).getSlot().getStartTime();
-                    Log.i(LOG,"DAte: "+date+" "+time);
-                    long millis = adapter.dateToMillis(date+" "+time);
-                    checkReminder(millis);
+                    if (list.size()>0){
+                        String date = list.get(0).getDate().toString();
+                        String time = list.get(0).getSlot().toString();
+                        Log.i(LOG,"DAte: "+date+" "+time);
+                        long millis = adapter.dateToMillis(date+" "+time);
+                        checkReminder(millis);
+                    }
 //                    checkReminder(adapter.dateToMillis("2017/12/26 03:52:00"));
                 } catch (ParseException e) {
                     Log.i(LOG,"Parse Exception.");
@@ -295,6 +297,8 @@ public class MainActivity extends AppCompatActivity{
                         }
                     });
                 break;
+            case R.id.action_mark:
+                startActivity(new Intent(this,MarkAvailableActivity.class));
         }
         Log.i(LOG,"menu item id: "+item.getItemId());
         return super.onOptionsItemSelected(item);

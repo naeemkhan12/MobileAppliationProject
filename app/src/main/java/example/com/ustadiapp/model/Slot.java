@@ -27,7 +27,7 @@ public class Slot {
     }
 
     public String getStartTime() {
-        return startTime+":00";
+        return startTime;
     }
 
     public void setStartTime(String startTime) {
@@ -35,10 +35,13 @@ public class Slot {
     }
 
     public String getEndTime() {
-        return endTime+":00";
+        return endTime;
     }
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+    public String toString(){
+        return startTime+":00";
     }
 }

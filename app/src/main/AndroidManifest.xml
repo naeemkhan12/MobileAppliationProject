@@ -39,7 +39,6 @@
         <!-- <action android:name="android.intent.action.SEARCH" /> -->
         <!-- </intent-filter> -->
         <!-- </activity> -->
-        <activity android:name=".MarkAvailableActivity" />
 
         <service android:name=".services.FirebaseMessageService">
             <intent-filter>
@@ -76,6 +75,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="example.com.ustadiapp.MainActivity" />
         </activity>
+        <activity android:name=".MarkAvailableActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="example.com.ustadiapp.MainActivity" />
+            </activity>
     </application>
 
 </manifest>

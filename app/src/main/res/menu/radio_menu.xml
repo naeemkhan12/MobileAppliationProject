@@ -11,9 +11,6 @@
         <item
             android:id="@+id/swap_radio"
             android:title="@string/radio_swap" />
-        <item
-            android:id="@+id/set_alarm"
-            android:title="@string/radio_alarm" />
 
     </group>
 

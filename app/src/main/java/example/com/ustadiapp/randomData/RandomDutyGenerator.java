@@ -20,7 +20,7 @@ import example.com.ustadiapp.model.User;
  */
 
 public class RandomDutyGenerator {
-    User[] users = {new User("X6g0wikHVASspueiFUoBLZct5t03","Namal User","naeemr2014@namal.edu.pk",true),new User("qqKz3v39ocZ38OS5uIrp6f1gyvs2","Bradford User","naeemb7070@gmail.com",true)};
+    User[] users = {new User("B9XnUxiS7UW6w0uXJ9nteTfSWd92","Namal User","namal.testing@gmail.com",true),new User("jOYGt82Q25OTV9gfPZ33dJZ1pA02","Bradford User","bradford.testing@gmail.com",true)};
     Slot[] slots= {new Slot(1,"9:00","10:15"),new Slot(2,"10:30","11:45"),new Slot(3,"12:00","13:15"),new Slot(4,"14:15","15:30"),new Slot(5,"15:45","16:00")};
     String[] subjects = {"Physics","Math","Chem","Bio","SD"};
     String[] venus ={"Lab-1","Lab-2","LH-1","LH-2","LH-3"};

@@ -41,6 +41,7 @@ public class MarkAvailableActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mark_available_activity);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         this.context=this;
         list = new ArrayList<>();
         firebaseAuth=FirebaseAuth.getInstance();
