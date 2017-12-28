@@ -56,8 +56,8 @@
         <receiver android:name=".AlertReceiver" />
 
         <uses-permission android:name="android.permission.INTERNET" />
-
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:theme="@style/no_title_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

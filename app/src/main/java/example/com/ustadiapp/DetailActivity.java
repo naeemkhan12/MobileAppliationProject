@@ -42,7 +42,6 @@ public class DetailActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         recyclerView = (RecyclerView) findViewById(R.id.detail_recyclerview);
         Bundle extras = getIntent().getExtras();
         if (extras!=null){

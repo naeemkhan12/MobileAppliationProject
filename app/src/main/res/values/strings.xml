@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UstadiApp</string>
+    <string name="app_name">Notify Us</string>
     <string name="facebook_application_id" translatable="false">424877444582224</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb424877444582224</string>
 
@@ -74,7 +74,7 @@
     <dimen name="material_text_display3">56sp</dimen>
     <dimen name="material_text_padding_small">1dp</dimen>
     <dimen name="material_margin_regular">10dp</dimen>
-    <dimen name="material_margin_small">5dp</dimen>
+    <dimen name="material_margin_small">2dp</dimen>
     <dimen name="material_padding_regular">5dp</dimen>
     <string name="title_activity_settings">Settings</string>
 

@@ -16,6 +16,7 @@ import android.support.v7.view.menu.MenuItemImpl;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -99,7 +100,7 @@ public class MainActivity extends AppCompatActivity{
         *
         * */
 
-        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
+//        crud.updateDutyTable(new RandomDutyGenerator().getRandomSchedule());
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         if (settings.getString("email","").equals("")){
             String email=FirebaseAuth.getInstance().getCurrentUser().getEmail();

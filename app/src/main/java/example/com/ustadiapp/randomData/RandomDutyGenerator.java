@@ -21,7 +21,7 @@ import example.com.ustadiapp.model.User;
 
 public class RandomDutyGenerator {
     User[] users = {new User("B9XnUxiS7UW6w0uXJ9nteTfSWd92","Namal User","namal.testing@gmail.com",true),new User("jOYGt82Q25OTV9gfPZ33dJZ1pA02","Bradford User","bradford.testing@gmail.com",true)};
-    Slot[] slots= {new Slot(1,"9:00","10:15"),new Slot(2,"10:30","11:45"),new Slot(3,"12:00","13:15"),new Slot(4,"14:15","15:30"),new Slot(5,"15:45","16:00")};
+    Slot[] slots= {new Slot(1,"9:00","10:15"),new Slot(2,"10:30","11:45"),new Slot(3,"12:00","1:15"),new Slot(4,"2:15","3:30"),new Slot(5,"3:45","5:00")};
     String[] subjects = {"Physics","Math","Chem","Bio","SD"};
     String[] venus ={"Lab-1","Lab-2","LH-1","LH-2","LH-3"};
     String[] days = {"Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"};
@@ -30,11 +30,11 @@ public class RandomDutyGenerator {
     public Schedule getRandomSchedule(){
         ArrayList<Duty> duties = new ArrayList<>();
         for (int i=0;i<5;i++){
-            double random= Math.random()*5;
-            double randUser = Math.random()*2;
-            int randInt = (int) random;
-            int randUserint = (int) randUser;
             for(int j=0; j<dates.length;j++){
+                double random= Math.random()*5;
+                double randUser = Math.random()*2;
+                int randInt = (int) random;
+                int randUserint = (int) randUser;
                 duties.add(new Duty(venus[randInt],slots[randInt],subjects[randInt],users[randUserint],dates[i],days[i]));
                 Log.i("TESTLOG",randInt+"");
             }
